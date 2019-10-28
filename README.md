@@ -1,0 +1,2 @@
+# EasyPawn
+Capstone individual project
