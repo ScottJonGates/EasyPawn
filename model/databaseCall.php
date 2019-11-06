@@ -1,7 +1,7 @@
 <?php
 
 class Database {
-private static $dsn = 'mysql:host=localhost;dbname=easyPawn';
+private static $dsn = 'mysql:host=localhost;dbname=easypawn';
 private static $username = 'root';
 private static $password = '';
 private static $db;
