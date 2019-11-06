@@ -4,7 +4,7 @@
 require_once('model/validate.php');
 require_once('model/user.php');
 require_once('model/databaseCall.php');
-
+require_once('model/DBuser.php');
 
 session_start();
 if (!isset($errorType)) {
@@ -78,8 +78,8 @@ switch ($action) {
 
 
         if ($isError) {
-            $action = 'register';
-            include 'view\register.php';
+            $action = 'getRegistered';
+            include 'view\getRegistered.php';
         } else {
             DBuser::insertNewUser($fName, $lName, $uName, $password);
             $user = DBuser::getUserByUserName($uName);
