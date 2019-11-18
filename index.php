@@ -92,10 +92,46 @@ switch ($action) {
         }
         die();
         break;
+    case 'checkLogin':
+        $uName = filter_input(INPUT_POST, 'uName');
+        $password = filter_input(INPUT_POST, 'password');
+        $user = DBuser::getUserByUserName($uName);
+
+        if ($user->getPassword() === $password) {
+            $_SESSION['uName'] = $user->getUsername();
+            $_SESSION['fName'] = $user->getFName();
+            $_SESSION['lName'] = $user->getLName();
+            $_SESSION['userID'] = $user->getUserID();
+            $_SESSION['admin'] = $user->getAdmin();
+            if($_SESSION['admin'] === '10'){
+                header('Location: index.php?action=adminProfile');
+            }else if($_SESSION['admin'] === '20'){
+                header('Location: index.php?action=employeeProfile');
+            }else if($_SESSION['admin'] === '30'){
+                header('Location: index.php?action=publicProfile');
+            }
+            
+        } else {
+            $registerError = 'Incorrect User Name and Password combination';
+            $action = 'welcome';
+            include 'view\welcome.php';
+        }
+        die();
+        break;
+    case 'publicProfile': /* go to user profile page */
+        $items = DBitem::getItemsBySellerID($_SESSION['userID']);
+        $bought = DBitem::getItemsBought($_SESSION['userID']);
+        include 'view\publicProfile.php';
+        die();
+        break;
     
     
-    
-    
+    case 'logout':
+        $_SESSION = array();
+        session_destroy();
+        header('Location: index.php?action=welcome');
+        die();
+        break;
     default:
         $_SESSION = array();
         session_destroy();
