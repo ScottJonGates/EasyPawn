@@ -12,5 +12,25 @@
  * @author Scott
  */
 class DBitem {
-    //put your code here
+    
+    public static function getItemsPawnedBySellerID($userID){
+        
+        
+        
+    }
+
+    public static function getItemsSoldBySellerID($userID) {
+        
+        
+        
+        
+    }
+
+    public static function getItemsBoughtBySellerID($userID) {
+        
+        
+        
+        
+    }
+
 }

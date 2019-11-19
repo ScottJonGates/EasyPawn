@@ -97,8 +97,9 @@ switch ($action) {
         $uName = filter_input(INPUT_POST, 'uName');
         $password = filter_input(INPUT_POST, 'password');
         $user = DBuser::getUserByUserName($uName);
+        $storedPassword = DBuser::getUserPasswordByID($user->getUserID());
 
-        if ($user->getPassword() === $password) {
+        if ($storedPassword === $password) {
             $_SESSION['uName'] = $user->getUsername();
             $_SESSION['fName'] = $user->getFName();
             $_SESSION['lName'] = $user->getLName();
@@ -120,20 +121,21 @@ switch ($action) {
         die();
         break;
     case 'publicProfile': /* go to user profile page */
-        $items = DBitem::getItemsBySellerID($_SESSION['userID']);
-        $bought = DBitem::getItemsBought($_SESSION['userID']);
+        $pawned = DBitem::getItemsPawnedBySellerID($_SESSION['userID']);
+        $sold = DBitem::getItemsSoldBySellerID($_SESSION['userID']);
+        $bought = DBitem::getItemsBoughtBySellerID($_SESSION['userID']);
         include 'view\publicProfile.php';
         die();
         break;
     case 'employeeProfile': /* go to employee profile page */
-        $items = DBitem::getItemsBySellerID($_SESSION['userID']);
-        $bought = DBitem::getItemsBought($_SESSION['userID']);
+        
+        
         include 'view\employeeProfile.php';
         die();
         break;
     case 'adminProfile': /* go to admin profile page */
-        $items = DBitem::getItemsBySellerID($_SESSION['userID']);
-        $bought = DBitem::getItemsBought($_SESSION['userID']);
+        
+        
         include 'view\publicProfile.php';
         die();
         break;

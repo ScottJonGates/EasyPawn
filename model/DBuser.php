@@ -30,8 +30,8 @@ class DBuser {
 
     public static function insertNewUser($fName, $lName, $uName, $password) {
         $db = Database::getDB();
-        $query = 'insert into users(fName, lName, username, password)'
-                . 'VALUES (:first_name, :last_name, :user_name, :user_password)';
+        $query = 'insert into users(fName, lName, username, password)
+                 VALUES (:first_name, :last_name, :user_name, :user_password)';
         $statement = $db->prepare($query);
         $statement->bindValue(':first_name', $fName);
         $statement->bindValue(':last_name', $lName);
@@ -41,10 +41,28 @@ class DBuser {
         $statement->closeCursor();
     }
     
+    public static function getUserPasswordByID($userID) {
+        $db = Database::getDB();
+
+        $query = 'select password 
+                  from users 
+                  WHERE userID = :userID';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':userID', $userID);
+        $statement->execute();
+        $row = $statement->fetch();
+        $statement->closeCursor();
+        
+        $password = $row['password'];
+        return $password;
+    }
+    
     public static function getUserByUserName($uName) {
         $db = Database::getDB();
         
-        $query = 'select * from users WHERE username = :username';
+        $query = 'select * 
+                 from users 
+                 WHERE username = :username';
         $statement = $db->prepare($query);
         $statement->bindValue(':username', $uName);
         $statement->execute();
@@ -58,21 +76,23 @@ class DBuser {
     
     public static function getUserByID($userID) {
         $db = Database::getDB();
-        $query = 'select * from users'
-                 .' WHERE userID = :userID';
+        $query = 'select * 
+                 from users
+                 WHERE userID = :userID';
         $statement = $db->prepare($query);
         $statement->bindValue(':userID', $userID);
         $statement->execute();
-        $results = $statement->fetch();
+        $row = $statement->fetch();
         $statement->closeCursor();
-        $user = new User($results['userID'], $row['fName'], $row['lName'], $row['username'], $row['email'], $row['phoneNumber'], $row['admin']);
+        $user = new User($row['userID'], $row['fName'], $row['lName'], $row['username'], $row['email'], $row['phoneNumber'], $row['admin']);
         return $user;
     }
 
     public static function deleteUserByItemID($userID){
         $db = Database::getDB();
         
-        $query = 'DELETE from users WHERE userID = :userID';
+        $query = 'DELETE from users 
+                 WHERE userID = :userID';
         $statement = $db->prepare($query);
         $statement->bindValue(':userID', $userID);
         $statement->execute();
@@ -81,8 +101,8 @@ class DBuser {
     
     public static function AddAdminByUserID($userID) {
         $db = Database::getDB();
-        $query = 'update users set admin = 10 '.
-                'WHERE userID = :userID';
+        $query = 'update users set admin = 10
+                 WHERE userID = :userID';
         $statement = $db->prepare($query);
         $statement->bindValue(':userID', $userID);
         $statement->execute();
@@ -91,11 +111,14 @@ class DBuser {
     
     public static function removeAdminByUserID($userID) {
         $db = Database::getDB();
-        $query = 'update users set admin = 20 '.
-                'WHERE userID = :userID';
+        $query = 'update users set admin = 20
+                 WHERE userID = :userID';
         $statement = $db->prepare($query);
         $statement->bindValue(':userID', $userID);
         $statement->execute();
         $statement->closeCursor();
     }
+
+    
+
 }
