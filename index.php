@@ -5,6 +5,7 @@ require_once('model/validate.php');
 require_once('model/user.php');
 require_once('model/databaseCall.php');
 require_once('model/DBuser.php');
+require_once('model/DBitem.php');
 
 session_start();
 if (!isset($errorType)) {

@@ -22,7 +22,7 @@ class DBuser {
         $statement->closeCursor();
         $users = array();
         foreach ($results as $row) {
-            $user = new User($row['userID'], $row['fName'], $row['lName'], $row['username'], $row['password'], $row['admin']);
+            $user = new User($row['userID'], $row['fName'], $row['lName'], $row['username'], $row['email'], $row['phoneNumber'], $row['admin']);
             $users[] = $user;
         }
         return $users;
@@ -30,7 +30,7 @@ class DBuser {
 
     public static function insertNewUser($fName, $lName, $uName, $password) {
         $db = Database::getDB();
-        $query = 'insert into users(fname, lname, username, password)'
+        $query = 'insert into users(fName, lName, username, password)'
                 . 'VALUES (:first_name, :last_name, :user_name, :user_password)';
         $statement = $db->prepare($query);
         $statement->bindValue(':first_name', $fName);
@@ -50,7 +50,7 @@ class DBuser {
         $statement->execute();
         $row = $statement->fetch();
         $statement->closeCursor();
-        $user = new User($row['userID'], $row['fName'], $row['lName'], $row['username'], $row['password'], $row['admin']);
+        $user = new User($row['userID'], $row['fName'], $row['lName'], $row['username'], $row['email'], $row['phoneNumber'], $row['admin']);
         
         return $user;
         
@@ -65,7 +65,7 @@ class DBuser {
         $statement->execute();
         $results = $statement->fetch();
         $statement->closeCursor();
-        $user = new User($results['userID'], $results['fName'], $results['lName'], $results['username'], $results['password'], $results['admin']);
+        $user = new User($results['userID'], $row['fName'], $row['lName'], $row['username'], $row['email'], $row['phoneNumber'], $row['admin']);
         return $user;
     }
 
@@ -81,7 +81,7 @@ class DBuser {
     
     public static function AddAdminByUserID($userID) {
         $db = Database::getDB();
-        $query = 'update users set admin = 1 '.
+        $query = 'update users set admin = 10 '.
                 'WHERE userID = :userID';
         $statement = $db->prepare($query);
         $statement->bindValue(':userID', $userID);
@@ -91,7 +91,7 @@ class DBuser {
     
     public static function removeAdminByUserID($userID) {
         $db = Database::getDB();
-        $query = 'update users set admin = 0 '.
+        $query = 'update users set admin = 20 '.
                 'WHERE userID = :userID';
         $statement = $db->prepare($query);
         $statement->bindValue(':userID', $userID);

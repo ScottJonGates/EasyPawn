@@ -12,62 +12,74 @@
  * @author Scott
  */
 class User {
-    private $userID, $fName, $lName, $username, $password, $admin;
+    private $userID, $fName, $lName, $username, $email, $phoneNumber, $admin;
     
-    public function __construct($userID, $fName, $lName, $username, $password, $admin) {
+    function __construct($userID, $fName, $lName, $username, $email, $phoneNumber, $admin) {
         $this->userID = $userID;
         $this->fName = $fName;
         $this->lName = $lName;
         $this->username = $username;
-        $this->password = $password;
+        $this->email = $email;
+        $this->phoneNumber = $phoneNumber;
         $this->admin = $admin;
     }
-
-    public function getUserID() {
+    
+    function getUserID() {
         return $this->userID;
     }
 
-    public function getFName() {
+    function getFName() {
         return $this->fName;
     }
 
-    public function getLName() {
+    function getLName() {
         return $this->lName;
     }
 
-    public function getUsername() {
+    function getUsername() {
         return $this->username;
     }
 
-    public function getPassword() {
-        return $this->password;
+    function getEmail() {
+        return $this->email;
     }
 
-    public function getAdmin() {
+    function getPhoneNumber() {
+        return $this->phoneNumber;
+    }
+
+    function getAdmin() {
         return $this->admin;
     }
 
-    public function setUserID($userID) {
+    function setUserID($userID) {
         $this->userID = $userID;
     }
 
-    public function setFName($fName) {
+    function setFName($fName) {
         $this->fName = $fName;
     }
 
-    public function setLName($lName) {
+    function setLName($lName) {
         $this->lName = $lName;
     }
 
-    public function setUsername($username) {
+    function setUsername($username) {
         $this->username = $username;
     }
 
-    public function setPassword($password) {
-        $this->password = $password;
+    function setEmail($email) {
+        $this->email = $email;
     }
 
-    public function setAdmin($admin) {
+    function setPhoneNumber($phoneNumber) {
+        $this->phoneNumber = $phoneNumber;
+    }
+
+    function setAdmin($admin) {
         $this->admin = $admin;
     }
+
+
+
 }
