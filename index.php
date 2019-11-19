@@ -76,7 +76,6 @@ switch ($action) {
             $errorPass = "User name must between 10 and 25 characters";
         }
 
-
         if ($isError) {
             $action = 'getRegistered';
             include 'view\getRegistered.php';
@@ -88,7 +87,8 @@ switch ($action) {
             $_SESSION['lName'] = $user->getLName();
             $_SESSION['userID'] = $user->getUserID();
             $_SESSION['admin'] = $user->getAdmin();
-            header('Location: index.php?action=profile');
+            
+            header('Location: index.php?action=publicProfile');
         }
         die();
         break;
@@ -124,7 +124,18 @@ switch ($action) {
         include 'view\publicProfile.php';
         die();
         break;
-    
+    case 'employeeProfile': /* go to employee profile page */
+        $items = DBitem::getItemsBySellerID($_SESSION['userID']);
+        $bought = DBitem::getItemsBought($_SESSION['userID']);
+        include 'view\employeeProfile.php';
+        die();
+        break;
+    case 'adminProfile': /* go to admin profile page */
+        $items = DBitem::getItemsBySellerID($_SESSION['userID']);
+        $bought = DBitem::getItemsBought($_SESSION['userID']);
+        include 'view\publicProfile.php';
+        die();
+        break;
     
     case 'logout':
         $_SESSION = array();
