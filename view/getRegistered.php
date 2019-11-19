@@ -51,6 +51,7 @@ Comments here
                     <span class="error"><?php echo htmlspecialchars($errorLName); ?></span>
                 <?php } ?>
                 <br>
+                
 
                 <label>User Name</label>
                 <input type="text" name="uName"
