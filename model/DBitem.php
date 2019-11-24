@@ -37,14 +37,33 @@ class DBitem {
         
     }
 
-    public static function getItemsSoldBySellerID($userID) {
+    public static function getItemsSoldByCustomerID($customerID) {
         
+        $db = Database::getDB();
+
+        $query = 'select * 
+                    from solditems as p 
+                    inner JOIN items as i on p.itemID = i.itemID 
+                    WHERE p.customerID = :customerID';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':customerID', $customerID);
+        $statement->execute();
+        $results = $statement->fetchAll();
+        $statement->closeCursor();
         
+        $items = array();
+        foreach ($results as $row) {
+            $item = new soldItems($row['itemID'], $row['itemName'], $row['description'],$row['soldID'], $row['employeeID'], 
+                    $row['customerID'], $row['soldFor'], $row['profit'], $row['dateSold'], $row['daysInInventory']);
+                    
+            $items[] = $item;
+        }
+        return $items ;
         
         
     }
 
-    public static function getItemsBoughtBySellerID($userID) {
+    public static function getItemsBoughtByCustomerID($customerID) {
         
         
         
