@@ -6,6 +6,8 @@ require_once('model/user.php');
 require_once('model/databaseCall.php');
 require_once('model/DBuser.php');
 require_once('model/DBitem.php');
+require_once('model/item.php');
+require_once('model/pawnItems.php');
 
 session_start();
 if (!isset($errorType)) {
@@ -41,6 +43,7 @@ switch ($action) {
     case 'welcome':
         $_SESSION = array();
         session_destroy();
+        $p = new pawnItems($itemID, $itemName, $description, $pawnID, $customerID, $dateRecieved, $loanAmount, $paymentRecieved, $paidOff, $employeeID);
         include 'view\welcome.php';
         die();
         break;
