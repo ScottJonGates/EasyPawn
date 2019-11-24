@@ -37,15 +37,15 @@ if ($action === NULL) {
     $action = filter_input(INPUT_GET, 'action');
     if ($action === NULL) {
         $action = 'welcome';
-    } $s = new soldItems($itemID, $itemName, $description, $soldID, $employeeID, $customerID, $soldFor, $profit, $dateSold, $daysInInventory);
+    } 
 }
 
 switch ($action) {
     case 'welcome':
         $_SESSION = array();
         session_destroy();
-        $p = new pawnItems($itemID, $itemName, $description, $pawnID, $customerID, $dateRecieved, $loanAmount, $paymentRecieved, $paidOff, $employeeID);
-        $s = new soldItems($itemID, $itemName, $description, $soldID, $employeeID, $customerID, $soldFor, $profit, $dateSold, $daysInInventory);
+        
+        
         include 'view\welcome.php';
         die();
         break;

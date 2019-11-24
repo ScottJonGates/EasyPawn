@@ -13,9 +13,27 @@
  */
 class DBitem {
     
-    public static function getItemsPawnedBySellerID($userID){
+    public static function getItemsPawnedByCustomerID($customerID){
         
+        $db = Database::getDB();
+
+        $query = 'select * 
+                    from pawnitems as p 
+                    inner JOIN items as i on p.itemID = i.itemID 
+                    WHERE p.customerID = :customerID';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':customerID', $customerID);
+        $statement->execute();
+        $results = $statement->fetchAll();
+        $statement->closeCursor();
         
+        $items = array();
+        foreach ($results as $row) {
+            $item = new pawnItems($row['itemID'], $row['itemName'], $row['description'], $row['pawnID'], $row['customerID'], $row['dateRecieved'], 
+                    $row['loanAmount'], $row['paymentRecieved'], $row['paidOff'], $row['employeeID']);
+            $items[] = $item;
+        }
+        return $items ;
         
     }
 
