@@ -45,6 +45,7 @@ CREATE TABLE `employee` (
 CREATE TABLE `inventory` (
   `inventoryID` int(11) NOT NULL,
   `itemID` int(11) NOT NULL,
+  `employeeID` int(11) NOT NULL,
   `dateInserted` date NOT NULL,
   `boughtFor` float NOT NULL,
   `askingPrice` float NOT NULL

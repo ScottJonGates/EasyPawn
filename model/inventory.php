@@ -13,13 +13,14 @@
  */
 class inventory extends item {
     
-    private $inventoryID, $boughtFor, $askingPrice, $dateInserted;
+    private $inventoryID, $boughtFor, $askingPrice, $dateInserted, $employeeID;
     
-    function __construct($itemID, $itemName, $description, $inventoryID, $boughtFor, $askingPrice, $dateInserted) {
+    function __construct($itemID, $itemName, $description, $inventoryID, $boughtFor, $askingPrice, $dateInserted, $employeeID) {
         $this->inventoryID = $inventoryID;
         $this->boughtFor = $boughtFor;
         $this->askingPrice = $askingPrice;
         $this->dateInserted = $dateInserted;
+        $this->employeeID = $employeeID;
         
         item::__construct($itemID, $itemName, $description);
     }
@@ -39,6 +40,10 @@ class inventory extends item {
     function getDateInserted() {
         return $this->dateInserted;
     }
+    
+    function getEmployeeID() {
+        return $this->employeeID;
+    }
 
     function setInventoryID($inventoryID) {
         $this->inventoryID = $inventoryID;
@@ -54,6 +59,10 @@ class inventory extends item {
 
     function setDateInserted($dateInserted) {
         $this->dateInserted = $dateInserted;
+    }
+
+    function setEmployeeID($employeeID) {
+        $this->employeeID = $employeeID;
     }
 
 
