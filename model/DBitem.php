@@ -94,7 +94,7 @@ class DBitem {
         $query = 'select * 
                     from pawnitems as p 
                     inner JOIN items as i on p.itemID = i.itemID 
-                    WHERE s.employeeID = :employeeID';
+                    WHERE p.employeeID = :employeeID';
         $statement = $db->prepare($query);
         $statement->bindValue(':employeeID', $employeeID);
         $statement->execute();
@@ -108,6 +108,24 @@ class DBitem {
             $items[] = $item;
         }
         return $items ; 
+    }
+    
+    public static function getItemPawnedByItemID($itemID){
+        $db = Database::getDB();
+        
+        $query = 'select * 
+                    from pawnitems as p 
+                    inner JOIN items as i on p.itemID = i.itemID 
+                    WHERE p.employeeID = :employeeID';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':itemID', $itemID);
+        $statement->execute();
+        $row = $statement->fetch();
+        $statement->closeCursor();
+        $item = new pawnItems($row['itemID'], $row['itemName'], $row['description'], $row['pawnID'], $row['customerID'], $row['dateRecieved'], 
+                    $row['loanAmount'], $row['paymentRecieved'], $row['paidOff'], $row['employeeID']);
+            
+        return $item;
     }
 
 }
