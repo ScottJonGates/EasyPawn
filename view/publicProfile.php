@@ -17,9 +17,56 @@ and open the template in the editor.
             <br>
             <div id="userNav"><?php include 'nav.php'; ?></div>
         </header>
-    
-        <?php
-        // put your code here
-        ?>
+    <main>
+        <h1>Items you have in Pawn</h1>
+
+            <table>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Item Description</th>
+                    <th>Price</th>
+                    <th>&nbsp;</th>
+                </tr>
+                <?php foreach ($pawnedItems as $item) : ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($item->getItemName()); ?></td>
+                        <td><?php echo htmlspecialchars($item->getiItemDescription()); ?></td>
+                        <td>$<?php echo htmlspecialchars($item->getItemPrice()); ?></td>
+                        <td><form action="index.php" method="post">
+                                <input type="hidden" name="action"
+                                       value="modifyItem">
+                                <input type="hidden" name="ItemID"
+                                       value="<?php echo htmlspecialchars($item->getItemID()); ?>">
+                                <input type="submit" value="Modify or Remove">
+                            </form></td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+            
+                        <h1>Items you have Bought</h1>
+
+            <table>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Item Description</th>
+                    <th>Price</th>
+                    <th>&nbsp;</th>
+                </tr>
+                <?php foreach ($boughtItems as $item) : ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($item->getItemName()); ?></td>
+                        <td><?php echo htmlspecialchars($item->getiItemDescription()); ?></td>
+                        <td>$<?php echo htmlspecialchars($item->getItemPrice()); ?></td>
+                        <td><form action="index.php" method="post">
+                                <input type="hidden" name="action"
+                                       value="resellItem">
+                                <input type="hidden" name="itemID"
+                                       value="<?php echo htmlspecialchars($item->getItemID()); ?>">
+                                <input type="submit" value="Resell">
+                            </form></td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+                        </main>
     </body>
 </html>
