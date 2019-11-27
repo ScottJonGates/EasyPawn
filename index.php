@@ -126,9 +126,8 @@ switch ($action) {
         die();
         break;
     case 'publicProfile': /* go to user profile page */
-        $pawned = DBitem::getItemsPawnedBySellerID($_SESSION['userID']);
-        $sold = DBitem::getItemsSoldBySellerID($_SESSION['userID']);
-        $bought = DBitem::getItemsBoughtBySellerID($_SESSION['userID']);
+        $pawned = DBitem::getItemsPawnedByCustomerID($_SESSION['userID']);
+        $bought = DBitem::getItemsBoughtByCustomerID($_SESSION['userID']);
         include 'view\publicProfile.php';
         die();
         break;
@@ -144,6 +143,27 @@ switch ($action) {
         include 'view\publicProfile.php';
         die();
         break;
+    
+    case 'customerListItem': /* go to admin profile page */
+        
+        
+        include 'view\customerListItem.php';
+        die();
+        break;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     case 'logout':
         $_SESSION = array();

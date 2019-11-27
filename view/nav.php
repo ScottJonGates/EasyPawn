@@ -8,5 +8,12 @@
     <button class="button" onclick="location.href = 'index.php?action=welcome'" type="button" title="Welcome"><!--  To welcome page  -->
         Login Page</button>
 
-<?php
-}
+<?php } else if ($action === 'publicProfile' || $action === 'customerListItem') { ?> 
+
+    <button class="button" onclick="location.href = 'index.php?action=welcome'" type="button" title="Login in as a New User"><!--  To welcome page  -->
+        Login Page</button>
+
+    <button class="button" onclick="location.href = 'index.php?action=customerListItem'" type="button" title="Request an Item for Sale or Pawn"><!--  To welcome page  -->
+        List an Item</button>
+
+<?php }
