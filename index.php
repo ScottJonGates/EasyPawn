@@ -126,6 +126,7 @@ switch ($action) {
         die();
         break;
     case 'publicProfile': /* go to user profile page */
+        $displayName = $_SESSION['fName'] . " " . $_SESSION['lName'];
         $pawned = DBitem::getItemsPawnedByCustomerID($_SESSION['userID']);
         $bought = DBitem::getItemsBoughtByCustomerID($_SESSION['userID']);
         include 'view\publicProfile.php';
