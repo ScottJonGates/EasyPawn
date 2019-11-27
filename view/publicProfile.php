@@ -42,9 +42,9 @@ and open the template in the editor.
                         <td><form action="index.php" method="post">
                                 <input type="hidden" name="action"
                                        value="modifyItem">
-                                <input type="hidden" name="ItemID"
+                                <input type="hidden" name="itemID"
                                        value="<?php echo htmlspecialchars($item->getItemID()); ?>">
-                                <input type="submit" value="Modify or Remove">
+                                <input type="submit" value="Make Payment">
                             </form></td>
                     </tr>
                 <?php endforeach; ?>
@@ -67,7 +67,7 @@ and open the template in the editor.
                                        value="resellItem">
                                 <input type="hidden" name="itemID"
                                        value="<?php echo htmlspecialchars($item->getItemID()); ?>">
-                                <input type="submit" value="Resell">
+                                <input type="submit" value="Resell or Pawn">
                             </form></td>
                     </tr>
                 <?php endforeach; ?>
