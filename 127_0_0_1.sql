@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 19, 2019 at 07:57 PM
+-- Generation Time: Nov 28, 2019 at 04:20 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -23,6 +23,19 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `easypawn` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `easypawn`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customerinquirytable`
+--
+
+CREATE TABLE `customerinquirytable` (
+  `inquiryID` int(11) NOT NULL,
+  `customerID` int(11) NOT NULL,
+  `askingFor` float NOT NULL,
+  `pawnOrSell` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -60,7 +73,7 @@ CREATE TABLE `inventory` (
 CREATE TABLE `items` (
   `itemID` int(11) NOT NULL,
   `itemName` varchar(50) NOT NULL,
-  `description` varchar(50) DEFAULT NULL
+  `description` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -121,7 +134,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`userID`, `fName`, `lName`, `username`, `email`, `phoneNumber`, `password`, `admin`) VALUES
 (1, 'Scott', 'Gates', 'Scott Jon Gates', NULL, NULL, 'Scott Jon Gates', 30),
 (2, 'Kelly', 'Gates', 'KGater4545', NULL, NULL, '45TYghbn1!', 30),
-(3, 'Scott', 'Gates', 'ScottJonGates', NULL, NULL, 'ScottJonGates', 30);
+(3, 'Scott', 'Gates', 'ScottJonGates', NULL, NULL, 'ScottJonGates', 30),
+(4, 'Scott', 'Gates', 'ScottGates', NULL, NULL, 'ScottGates', 30);
 
 --
 -- Indexes for dumped tables
@@ -196,7 +210,7 @@ ALTER TABLE `solditems`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
