@@ -37,15 +37,15 @@ if ($action === NULL) {
     $action = filter_input(INPUT_GET, 'action');
     if ($action === NULL) {
         $action = 'welcome';
-    } 
+    }
 }
 
 switch ($action) {
     case 'welcome':
         $_SESSION = array();
         session_destroy();
-        
-        
+
+
         include 'view\welcome.php';
         die();
         break;
@@ -93,7 +93,7 @@ switch ($action) {
             $_SESSION['lName'] = $user->getLName();
             $_SESSION['userID'] = $user->getUserID();
             $_SESSION['admin'] = $user->getAdmin();
-            
+
             header('Location: index.php?action=publicProfile');
         }
         die();
@@ -110,14 +110,13 @@ switch ($action) {
             $_SESSION['lName'] = $user->getLName();
             $_SESSION['userID'] = $user->getUserID();
             $_SESSION['admin'] = $user->getAdmin();
-            if($_SESSION['admin'] === '10'){
+            if ($_SESSION['admin'] === '10') {
                 header('Location: index.php?action=adminProfile');
-            }else if($_SESSION['admin'] === '20'){
+            } else if ($_SESSION['admin'] === '20') {
                 header('Location: index.php?action=employeeProfile');
-            }else if($_SESSION['admin'] === '30'){
+            } else if ($_SESSION['admin'] === '30') {
                 header('Location: index.php?action=publicProfile');
             }
-            
         } else {
             $registerError = 'Incorrect User Name and Password combination';
             $action = 'welcome';
@@ -134,39 +133,62 @@ switch ($action) {
         die();
         break;
     case 'employeeProfile': /* go to employee profile page */
-        
-        
+
+
         include 'view\employeeProfile.php';
         die();
         break;
     case 'adminProfile': /* go to admin profile page */
-        
-        
+
+
         include 'view\publicProfile.php';
         die();
         break;
-    
+
     case 'customerListItem': /* go to admin profile page */
         $action = 'customerListItem';
         $_SESSION['admin'];
         include 'view\customerListItem.php';
         die();
         break;
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+    case 'newCustItemInsert': /* go to admin profile page */
+        $itemName = filter_input(INPUT_POST, 'itemName');
+        $description = filter_input(INPUT_POST, 'description');
+        $amountWanted = filter_input(INPUT_POST, 'amountWanted');
+        $pawnOrSale = filter_input(INPUT_POST, 'pawnOrSale');
+        $error = FALSE;
+
+        if ($error) {
+            $action = 'customerListItem';
+            $_SESSION['admin'];
+
+
+            include 'view\customerListItem.php';
+            die();
+            break;
+        }
+        
+        
+        
+
+
+        header('Location: index.php?action=publicProfile');
+        die();
+        break;
+
+
+
+
+
+
+
+
+
+
+
+
+
     case 'logout':
         $_SESSION = array();
         session_destroy();

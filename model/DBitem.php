@@ -62,6 +62,16 @@ class DBitem {
         
         
     }
+    
+    public static function getCustInquiryItemsByCust($customerID){
+       
+        
+    }
+    
+    public static function getAllCustInquiryItems(){
+        
+        
+    }
 
     public static function getItemsSoldByEmployeeID($employeeID) {
         

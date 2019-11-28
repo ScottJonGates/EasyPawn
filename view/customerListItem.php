@@ -19,6 +19,9 @@ if (!isset($errorDescription)) {
 if (!isset($errorAmountWanted)) {
     $errorAmountWanted = '';
 }
+if (!isset($errorPawnOrSale)) {
+    $errorPawnOrSale = '';
+}
 ?>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -38,44 +41,48 @@ and open the template in the editor.
             <div id="userNav"><?php include 'nav.php'; ?></div>
         </header>
         <main>
-            <table id='no_border'>
-                <tr>
-                    <td class='lineRight'>Item Name</td>
-                    <td> <input type="text" name="itemName" 
-                                value="<?php echo htmlspecialchars($itemName); ?>"><br>
-                                <?php if (!empty($errorItemName)) { ?>
-                            <span class="error"><?php echo htmlspecialchars($errorItemName); ?></span>
-                        <?php } ?></td>
-                    <td>&nbsp;&nbsp;&nbsp;</td>
-                    <td class='lineRight'>Description</td>
-                    <td> <textarea name="description" class="form-control"  rows="3" cols="40"  maxlength="250"  
-                                   value="<?php echo htmlspecialchars($description); ?>"></textarea>
-                                   <?php if (!empty($errorDescription)) { ?>
-                            <span class="error"><?php echo htmlspecialchars($errorDescription); ?></span>
-                        <?php } ?></td>
-                </tr>
 
-                <tr>
-                    <td class='lineRight'>Amount Wanted</td>
-                    <td> <input type="text" name="amountWanted" 
-                                value="<?php echo htmlspecialchars($amountWanted); ?>"><br>
-                                <?php if (!empty($errorAmountWanted)) { ?>
-                            <span class="error"><?php echo htmlspecialchars($errorAmountWanted); ?></span>
-                        <?php } ?></td>
-                    <td>&nbsp;&nbsp;&nbsp;</td>
-                    <td class='lineRight'>For</td>
-                    <td> <input type="radio" name="pawnOrSale" value="pawn" checked> Pawn &nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="radio" name="pawnOrSale" value="sale"> Sale
-                        <br>
-                        <?php if (!empty($errorAmountWanted)) { ?>
-                            <span class="error"><?php echo htmlspecialchars($errorAmountWanted); ?></span>
-                        <?php } ?></td>
+            <form id="inputform" action="index.php" method="post">
+                <input type="hidden" name="action" value="newCustItemInsert" />
+                <table id='no_border'>
+                    <tr>
+                        <td class='lineRight'>Item Name</td>
+                        <td> <input type="text" name="itemName" 
+                                    value="<?php echo htmlspecialchars($itemName); ?>"><br>
+                                    <?php if (!empty($errorItemName)) { ?>
+                                <span class="error"><?php echo htmlspecialchars($errorItemName); ?></span>
+                            <?php } ?></td>
+                        <td>&nbsp;&nbsp;&nbsp;</td>
+                        <td class='lineRight'>Description</td>
+                        <td> <textarea name="description" class="form-control"  rows="3" cols="40"  maxlength="250"  
+                                       value="<?php echo htmlspecialchars($description); ?>"></textarea>
+                                       <?php if (!empty($errorDescription)) { ?>
+                                <span class="error"><?php echo htmlspecialchars($errorDescription); ?></span>
+                            <?php } ?></td>
+                    </tr>
 
-                </tr>
+                    <tr>
+                        <td class='lineRight'>Amount Wanted</td>
+                        <td> <input type="text" name="amountWanted" 
+                                    value="<?php echo htmlspecialchars($amountWanted); ?>"><br>
+                                    <?php if (!empty($errorAmountWanted)) { ?>
+                                <span class="error"><?php echo htmlspecialchars($errorAmountWanted); ?></span>
+                            <?php } ?></td>
+                        <td>&nbsp;&nbsp;&nbsp;</td>
+                        <td class='lineRight'>For</td>
+                        <td> <input type="radio" name="pawnOrSale" value="pawn" checked> Pawn &nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="pawnOrSale" value="sell"> Sell
+                            <br>
+                            <?php if (!empty($errorPawnOrSale)) { ?>
+                                <span class="error"><?php echo htmlspecialchars($errorPawnOrSale); ?></span>
+                            <?php } ?></td>
 
-            </table>
+                    </tr>
 
+                </table>
 
+                <input type="submit" value="Submit For Approval"><br>
+            </form>
         </main> 
     </body>
 </html>
