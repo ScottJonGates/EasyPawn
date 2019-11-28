@@ -9,6 +9,7 @@ require_once('model/DBitem.php');
 require_once('model/item.php');
 require_once('model/pawnItems.php');
 require_once('model/soldItems.php');
+require_once('model/custInquiryItem.php');
 
 session_start();
 if (!isset($errorType)) {

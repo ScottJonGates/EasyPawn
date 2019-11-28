@@ -12,9 +12,9 @@
  * @author Scott
  */
 class DBitem {
-    
-    public static function getItemsPawnedByCustomerID($customerID){
-        
+
+    public static function getItemsPawnedByCustomerID($customerID) {
+
         $db = Database::getDB();
 
         $query = 'select * 
@@ -26,19 +26,17 @@ class DBitem {
         $statement->execute();
         $results = $statement->fetchAll();
         $statement->closeCursor();
-        
+
         $items = array();
         foreach ($results as $row) {
-            $item = new pawnItems($row['itemID'], $row['itemName'], $row['description'], $row['pawnID'], $row['customerID'], $row['dateRecieved'], 
-                    $row['loanAmount'], $row['paymentRecieved'], $row['paidOff'], $row['employeeID']);
+            $item = new pawnItems($row['itemID'], $row['itemName'], $row['description'], $row['pawnID'], $row['customerID'], $row['dateRecieved'], $row['loanAmount'], $row['paymentRecieved'], $row['paidOff'], $row['employeeID']);
             $items[] = $item;
         }
-        return $items ;
-        
+        return $items;
     }
 
     public static function getItemsBoughtByCustomerID($customerID) {
-        
+
         $db = Database::getDB();
 
         $query = 'select * 
@@ -50,31 +48,58 @@ class DBitem {
         $statement->execute();
         $results = $statement->fetchAll();
         $statement->closeCursor();
-        
+
         $items = array();
         foreach ($results as $row) {
-            $item = new soldItems($row['itemID'], $row['itemName'], $row['description'],$row['soldID'], $row['employeeID'], 
-                    $row['customerID'], $row['soldFor'], $row['profit'], $row['dateSold'], $row['daysInInventory']);
-                    
+            $item = new soldItems($row['itemID'], $row['itemName'], $row['description'], $row['soldID'], $row['employeeID'], $row['customerID'], $row['soldFor'], $row['profit'], $row['dateSold'], $row['daysInInventory']);
+
             $items[] = $item;
         }
-        return $items ;
-        
-        
+        return $items;
     }
-    
-    public static function getCustInquiryItemsByCust($customerID){
-       
-        
+
+    public static function getCustInquiryItemsByCust($customerID) {
+        $db = Database::getDB();
+
+        $query = 'select * 
+                    from customerinquirytable 
+                    WHERE s.customerID = :customerID';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':customerID', $customerID);
+        $statement->execute();
+        $results = $statement->fetchAll();
+        $statement->closeCursor();
+
+        $items = array();
+        foreach ($results as $row) {
+            $item = new custInquiryItem($row['inquiryID'], $row['customerID'], $row['askingFor'], $row['pawnOrSell']);
+
+            $items[] = $item;
+        }
+        return $items;
     }
-    
-    public static function getAllCustInquiryItems(){
-        
-        
+
+    public static function getAllCustInquiryItems() {
+       $db = Database::getDB();
+
+        $query = 'select * 
+                    from customerinquirytable';
+        $statement = $db->prepare($query);
+        $statement->execute();
+        $results = $statement->fetchAll();
+        $statement->closeCursor();
+
+        $items = array();
+        foreach ($results as $row) {
+            $item = new custInquiryItem($row['inquiryID'], $row['customerID'], $row['askingFor'], $row['pawnOrSell']);
+
+            $items[] = $item;
+        }
+        return $items;
     }
 
     public static function getItemsSoldByEmployeeID($employeeID) {
-        
+
         $db = Database::getDB();
 
         $query = 'select * 
@@ -86,19 +111,18 @@ class DBitem {
         $statement->execute();
         $results = $statement->fetchAll();
         $statement->closeCursor();
-        
+
         $items = array();
         foreach ($results as $row) {
-            $item = new soldItems($row['itemID'], $row['itemName'], $row['description'],$row['soldID'], $row['employeeID'], 
-                    $row['customerID'], $row['soldFor'], $row['profit'], $row['dateSold'], $row['daysInInventory']);
-                    
+            $item = new soldItems($row['itemID'], $row['itemName'], $row['description'], $row['soldID'], $row['employeeID'], $row['customerID'], $row['soldFor'], $row['profit'], $row['dateSold'], $row['daysInInventory']);
+
             $items[] = $item;
         }
-        return $items ; 
+        return $items;
     }
-    
+
     public static function getItemsPawnLoanByEmployeeID($employeeID) {
-        
+
         $db = Database::getDB();
 
         $query = 'select * 
@@ -110,19 +134,18 @@ class DBitem {
         $statement->execute();
         $results = $statement->fetchAll();
         $statement->closeCursor();
-        
+
         $items = array();
         foreach ($results as $row) {
-            $item = new pawnItems($row['itemID'], $row['itemName'], $row['description'], $row['pawnID'], $row['customerID'], $row['dateRecieved'], 
-                    $row['loanAmount'], $row['paymentRecieved'], $row['paidOff'], $row['employeeID']);
+            $item = new pawnItems($row['itemID'], $row['itemName'], $row['description'], $row['pawnID'], $row['customerID'], $row['dateRecieved'], $row['loanAmount'], $row['paymentRecieved'], $row['paidOff'], $row['employeeID']);
             $items[] = $item;
         }
-        return $items ; 
+        return $items;
     }
-    
-    public static function getItemPawnedByItemID($itemID){
+
+    public static function getItemPawnedByItemID($itemID) {
         $db = Database::getDB();
-        
+
         $query = 'select * 
                     from pawnitems as p 
                     inner JOIN items as i on p.itemID = i.itemID 
@@ -132,9 +155,8 @@ class DBitem {
         $statement->execute();
         $row = $statement->fetch();
         $statement->closeCursor();
-        $item = new pawnItems($row['itemID'], $row['itemName'], $row['description'], $row['pawnID'], $row['customerID'], $row['dateRecieved'], 
-                    $row['loanAmount'], $row['paymentRecieved'], $row['paidOff'], $row['employeeID']);
-            
+        $item = new pawnItems($row['itemID'], $row['itemName'], $row['description'], $row['pawnID'], $row['customerID'], $row['dateRecieved'], $row['loanAmount'], $row['paymentRecieved'], $row['paidOff'], $row['employeeID']);
+
         return $item;
     }
 
