@@ -97,6 +97,11 @@ td, th {
     padding: .2em .5em .2em .5em;
     text-align: left;
 }
+
+#lineRight{
+    text-align: right;
+}
+
 #no_border {
     border: 0px;
 }

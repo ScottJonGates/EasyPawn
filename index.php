@@ -147,8 +147,8 @@ switch ($action) {
         break;
     
     case 'customerListItem': /* go to admin profile page */
-        
-        
+        $action = 'customerListItem';
+        $_SESSION['admin'];
         include 'view\customerListItem.php';
         die();
         break;
