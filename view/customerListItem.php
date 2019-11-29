@@ -19,8 +19,8 @@ if (!isset($errorDescription)) {
 if (!isset($errorAmountWanted)) {
     $errorAmountWanted = '';
 }
-if (!isset($errorPawnOrSale)) {
-    $errorPawnOrSale = '';
+if (!isset($errorpawnOrSell)) {
+    $errorpawnOrSell = '';
 }
 ?>
 <!--
@@ -70,11 +70,11 @@ and open the template in the editor.
                             <?php } ?></td>
                         <td>&nbsp;&nbsp;&nbsp;</td>
                         <td class='lineRight'>For</td>
-                        <td> <input type="radio" name="pawnOrSale" value="pawn" checked> Pawn &nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="pawnOrSale" value="sell"> Sell
+                        <td> <input type="radio" name="pawnOrSell" value="pawn" checked> Pawn &nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="pawnOrSell" value="sell"> Sell
                             <br>
                             <?php if (!empty($errorPawnOrSale)) { ?>
-                                <span class="error"><?php echo htmlspecialchars($errorPawnOrSale); ?></span>
+                                <span class="error"><?php echo htmlspecialchars($errorpawnOrSell); ?></span>
                             <?php } ?></td>
 
                     </tr>

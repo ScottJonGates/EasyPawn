@@ -160,4 +160,19 @@ class DBitem {
         return $item;
     }
 
+    public static function insertnewCustInquiry($itemName, $description, $amountWanted, $pawnOrSell, $customerID) {
+        $db = Database::getDB();
+        $query = 'insert into customerinquirytable(customerID, itemName, description, amountWanted, pawnOrSell)
+                 VALUES (:customerID, :itemName, :description, :amountWanted, :pawnOrSell)';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':customerID', $customerID);
+        $statement->bindValue(':itemName', $itemName);
+        $statement->bindValue(':description', $description);
+        $statement->bindValue(':amountWanted', $amountWanted);
+        $statement->bindValue(':pawnOrSell', $pawnOrSell);
+        $statement->execute();
+        $statement->closeCursor();
+        
+    }
+
 }

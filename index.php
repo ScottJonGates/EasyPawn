@@ -156,21 +156,36 @@ switch ($action) {
     case 'newCustItemInsert': /* go to admin profile page */
         $itemName = filter_input(INPUT_POST, 'itemName');
         $description = filter_input(INPUT_POST, 'description');
-        $amountWanted = filter_input(INPUT_POST, 'amountWanted');
-        $pawnOrSale = filter_input(INPUT_POST, 'pawnOrSale');
+        $amountWanted = filter_input(INPUT_POST, 'amountWanted', FILTER_VALIDATE_FLOAT);
+        $pawnOrSell = filter_input(INPUT_POST, 'pawnOrSell');
         $error = FALSE;
+        
+        if (Validate::LengthToShort($itemName, 1) || Validate::LengthTolong($itemName, 51)) {
+            $error = true;
+            $errorItemName = "Item Name must between 2 and 50 characters long";
+        }
+        
+        if (Validate::LengthToShort($description, 1) || Validate::LengthTolong($description, 251)) {
+            $error = true;
+            $errorDescription = "Description must between 2 and 250 characters long";
+        }
+        
+        if ($amountWanted == "" || $amountWanted == NULL) {
+            $error = true;
+            $errorAmountWanted = "Please enter a number";
+        }
+        
 
         if ($error) {
             $action = 'customerListItem';
             $_SESSION['admin'];
-
 
             include 'view\customerListItem.php';
             die();
             break;
         }
         
-        
+        DBitem::insertnewCustInquiry($itemName, $description, $amountWanted, $pawnOrSell, $_SESSION['userID']);
         
 
 

@@ -33,6 +33,8 @@ USE `easypawn`;
 CREATE TABLE `customerinquirytable` (
   `inquiryID` int(11) NOT NULL,
   `customerID` int(11) NOT NULL,
+`itemName` int(50) NOT NULL,
+`description` varchar(250) DEFAULT NULL,
   `askingFor` float NOT NULL,
   `pawnOrSell` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
