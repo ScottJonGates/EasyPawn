@@ -198,11 +198,11 @@ switch ($action) {
             break;
         }
         
-        if($_SESSION['inquiryID'] !== null || $_SESSION['inquiryID'] !== ''){
+        if($_SESSION['inquiryID'] != null || $_SESSION['inquiryID'] != ''){
             DBitem::editCustInquiryByID($itemName, $description, $amountWanted, $pawnOrSell, $_SESSION['inquiryID']);
             $_SESSION['inquiryID'] = '';
         }else {DBitem::insertnewCustInquiry($itemName, $description, $amountWanted, $pawnOrSell, $_SESSION['userID']);}
-        DBitem::insertnewCustInquiry($itemName, $description, $amountWanted, $pawnOrSell, $_SESSION['userID']);
+        
         header('Location: index.php?action=publicProfile');
         die();
         break;
