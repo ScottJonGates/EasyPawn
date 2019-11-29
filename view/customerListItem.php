@@ -4,11 +4,14 @@
 if (!isset($itemName)) {
     $itemName = '';
 }
-if (!isset($$description)) {
+if (!isset($description)) {
     $description = '';
 }
 if (!isset($amountWanted)) {
     $amountWanted = '';
+}
+if (!isset($pawnOrSell)) {
+    $pawnOrSell = '';
 }
 if (!isset($errorItemName)) {
     $errorItemName = '';
@@ -54,9 +57,8 @@ and open the template in the editor.
                             <?php } ?></td>
                         <td>&nbsp;&nbsp;&nbsp;</td>
                         <td class='lineRight'>Description</td>
-                        <td> <textarea name="description" class="form-control"  rows="3" cols="40"  maxlength="250"  
-                                       value="<?php echo htmlspecialchars($description); ?>"></textarea>
-                                       <?php if (!empty($errorDescription)) { ?>
+                        <td> <textarea name="description" class="form-control"  rows="3" cols="40"  maxlength="250"><?php echo htmlspecialchars($description); ?></textarea>
+                            <?php if (!empty($errorDescription)) { ?>
                                 <span class="error"><?php echo htmlspecialchars($errorDescription); ?></span>
                             <?php } ?></td>
                     </tr>
@@ -70,8 +72,13 @@ and open the template in the editor.
                             <?php } ?></td>
                         <td>&nbsp;&nbsp;&nbsp;</td>
                         <td class='lineRight'>For</td>
-                        <td> <input type="radio" name="pawnOrSell" value="pawn" checked> Pawn &nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="pawnOrSell" value="sell"> Sell
+                        <td> <input type="radio" name="pawnOrSell" value="pawn" 
+                            <?php if ($pawnOrSell === '' || $pawnOrSell === 'pawn') { ?>checked
+                            <?php } ?>> Pawn &nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            <input type="radio" name="pawnOrSell" value="sell" 
+                                <?php if ($pawnOrSell === 'sell') { ?>checked
+                            <?php } ?>> Sell
                             <br>
                             <?php if (!empty($errorPawnOrSale)) { ?>
                                 <span class="error"><?php echo htmlspecialchars($errorpawnOrSell); ?></span>

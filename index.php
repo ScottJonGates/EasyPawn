@@ -153,7 +153,7 @@ switch ($action) {
         die();
         break;
 
-    case 'newCustItemInsert': /* go to admin profile page */
+    case 'newCustItemInsert': /* go to CustItemInsert page */
         $itemName = filter_input(INPUT_POST, 'itemName');
         $description = filter_input(INPUT_POST, 'description');
         $amountWanted = filter_input(INPUT_POST, 'amountWanted', FILTER_VALIDATE_FLOAT);
@@ -167,6 +167,7 @@ switch ($action) {
         
         if (Validate::LengthToShort($description, 1) || Validate::LengthTolong($description, 251)) {
             $error = true;
+            $description = NULL;
             $errorDescription = "Description must between 2 and 250 characters long";
         }
         
@@ -175,7 +176,6 @@ switch ($action) {
             $errorAmountWanted = "Please enter a number";
         }
         
-
         if ($error) {
             $action = 'customerListItem';
             $_SESSION['admin'];
@@ -186,13 +186,11 @@ switch ($action) {
         }
         
         DBitem::insertnewCustInquiry($itemName, $description, $amountWanted, $pawnOrSell, $_SESSION['userID']);
-        
-
-
         header('Location: index.php?action=publicProfile');
         die();
         break;
 
+        
 
 
 
