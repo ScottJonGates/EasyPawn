@@ -30,6 +30,9 @@ if (!isset($_SESSION['userID'])) {
 if (!isset($_SESSION['admin'])) {
     $_SESSION['admin'] = '';
 }
+if (!isset($_SESSION['inquiryID'])) {
+    $_SESSION['inquiryID'] = '';
+}
 
 
 
@@ -147,6 +150,16 @@ switch ($action) {
         break;
 
     case 'customerListItem': /* go to admin profile page */
+        $inquiryID = filter_input(INPUT_POST, 'inquiryID');
+        if ($inquiryID !== null || $inquiryID !== ''){
+            $item = DBitem::getCustInquiryByID($inquiryID);
+            $itemName = $item->getItemName();
+            $description = $item->getDescription();
+            $amountWanted = $item->getAmountWanted();
+            $pawnOrSell = $item->getPawnOrSell();
+            $_SESSION['inquiryID'] = $inquiryID;
+        }
+        
         $action = 'customerListItem';
         $_SESSION['admin'];
         include 'view\customerListItem.php';
@@ -185,6 +198,10 @@ switch ($action) {
             break;
         }
         
+        if($_SESSION['inquiryID'] !== null || $_SESSION['inquiryID'] !== ''){
+            DBitem::editCustInquiryByID($itemName, $description, $amountWanted, $pawnOrSell, $_SESSION['inquiryID']);
+            $_SESSION['inquiryID'] = '';
+        }else {DBitem::insertnewCustInquiry($itemName, $description, $amountWanted, $pawnOrSell, $_SESSION['userID']);}
         DBitem::insertnewCustInquiry($itemName, $description, $amountWanted, $pawnOrSell, $_SESSION['userID']);
         header('Location: index.php?action=publicProfile');
         die();

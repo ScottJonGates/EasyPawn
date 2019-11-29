@@ -13,17 +13,17 @@
  */
 class custInquiryItem {
     
-    public $inquiryID, $customerID, $askingFor, $itemName, $description, $pawnOrSell;
+    public $inquiryID, $customerID, $amountWanted, $itemName, $description, $pawnOrSell;
     
-    function __construct($inquiryID, $customerID, $askingFor, $itemName, $description, $pawnOrSell) {
+    function __construct($inquiryID, $customerID, $amountWanted, $itemName, $description, $pawnOrSell) {
         $this->inquiryID = $inquiryID;
         $this->customerID = $customerID;
-        $this->askingFor = $askingFor;
+        $this->amountWanted = $amountWanted;
         $this->itemName = $itemName;
         $this->description = $description;
         $this->pawnOrSell = $pawnOrSell;
     }
-    
+
     function getInquiryID() {
         return $this->inquiryID;
     }
@@ -32,8 +32,8 @@ class custInquiryItem {
         return $this->customerID;
     }
 
-    function getAskingFor() {
-        return $this->askingFor;
+    function getAmountWanted() {
+        return $this->amountWanted;
     }
 
     function getItemName() {
@@ -56,8 +56,8 @@ class custInquiryItem {
         $this->customerID = $customerID;
     }
 
-    function setAskingFor($askingFor) {
-        $this->askingFor = $askingFor;
+    function setAmountWanted($amountWanted) {
+        $this->amountWanted = $amountWanted;
     }
 
     function setItemName($itemName) {
@@ -72,5 +72,5 @@ class custInquiryItem {
         $this->pawnOrSell = $pawnOrSell;
     }
 
-    
+
 }

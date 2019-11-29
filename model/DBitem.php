@@ -174,5 +174,39 @@ class DBitem {
         $statement->closeCursor();
         
     }
+    
+    public static function editCustInquiryByID($itemName, $description, $amountWanted, $pawnOrSell,$inquiryID) {
+        $db = Database::getDB();
+        
+        $query = 'update customerinquirytable set itemName = :itemName, description = :description, 
+                amountWanted = :amountWanted, pawnOrSell = :pawnOrSell
+                WHERE inquiryID = :inquiryID';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':inquiryID', $inquiryID);
+        $statement->bindValue(':itemName', $itemName);
+        $statement->bindValue(':description', $description);
+        $statement->bindValue(':amountWanted', $amountWanted);
+        $statement->bindValue(':pawnOrSell', $pawnOrSell);
+        $statement->execute();
+        $statement->closeCursor();
+    }
+
+    public static function getCustInquiryByID($inquiryID) {
+        $db = Database::getDB();
+
+        $query = 'select * 
+                    from customerinquirytable
+                    WHERE inquiryID = :inquiryID';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':inquiryID', $inquiryID);
+        $statement->execute();
+        $row = $statement->fetch();
+        $statement->closeCursor();
+        $item = new custInquiryItem($row['inquiryID'], $row['customerID'], $row['askingFor'], $row['itemName'], $row['description'], $row['pawnOrSell']);
+
+        return $item;
+    }
+
+    
 
 }
