@@ -120,6 +120,16 @@ class DBuser {
         $statement->execute();
         $statement->closeCursor();
     }
+    
+    public static function removeEmpByUserID($userID) {
+        $db = Database::getDB();
+        $query = 'update users set admin = 30
+                 WHERE userID = :userID';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':userID', $userID);
+        $statement->execute();
+        $statement->closeCursor();
+    }
 
     
 
