@@ -92,6 +92,10 @@ switch ($action) {
             $isError = true;
             $errorPhoneNumber = "Phone pattern '402-123-4567'";
         }
+        if (Validate::LengthToShort($email, 9) || Validate::LengthTolong($email, 26)) {
+            $isError = true;
+            $errorEmail = "Please enter an Email";
+        }
 
 
         if ($isError) {

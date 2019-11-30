@@ -18,6 +18,24 @@ if (!isset($email)) {
 if (!isset($registerError)) {
     $registerError = '';
 }
+if (!isset($errorFName)) {
+    $errorFName = '';
+}
+if (!isset($errorLName)) {
+    $errorLName = '';
+}
+if (!isset($errorUName)) {
+    $errorUName = '';
+}
+if (!isset($errorPass)) {
+    $errorPass = '';
+}
+if (!isset($errorPhoneNumber)) {
+    $errorPhoneNumber = '';
+}
+if (!isset($errorEmail)) {
+    $errorEmail = '';
+}
 ?>
 
 
