@@ -75,29 +75,7 @@ and open the template in the editor.
                             </form></td>
                     </tr>
                 <?php endforeach; ?>
-            </table>
-            <h1>Items you have Bought</h1>
-
-            <table>
-                <tr>
-                    <th>Item Name</th>
-                    <th>Date Bought</th>
-                    <th>&nbsp;</th>
-                </tr>
-                <?php foreach ($boughtItems as $item) : ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($item->getItemName()); ?></td>
-                        <td><?php echo htmlspecialchars($item->getDateSold()); ?></td>
-                        <td><form action="index.php" method="post">
-                                <input type="hidden" name="action"
-                                       value="resellItem">
-                                <input type="hidden" name="itemID"
-                                       value="<?php echo htmlspecialchars($item->getItemID()); ?>">
-                                <input type="submit" value="Resell or Pawn">
-                            </form></td>
-                    </tr>
-                <?php endforeach; ?>
-            </table>
+            
         </main>
     </body>
 </html>
