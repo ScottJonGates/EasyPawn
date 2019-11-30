@@ -202,11 +202,31 @@ class DBitem {
         $statement->execute();
         $row = $statement->fetch();
         $statement->closeCursor();
-        $item = new custInquiryItem($row['inquiryID'], $row['customerID'], $row['askingFor'], $row['itemName'], $row['description'], $row['pawnOrSell']);
+        $item = new custInquiryItem($row['inquiryID'], $row['customerID'], $row['amountWanted'], $row['itemName'], $row['description'], $row['pawnOrSell']);
 
         return $item;
     }
 
-    
+    public static function getItemsInquiryByCustomerID($customerID) {
+
+        $db = Database::getDB();
+
+        $query = 'select * 
+                    from customerinquirytable
+                    WHERE customerID = :customerID';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':customerID', $customerID);
+        $statement->execute();
+        $results = $statement->fetchAll();
+        $statement->closeCursor();
+
+        $items = array();
+        foreach ($results as $row) {
+            $item = new custInquiryItem($row['inquiryID'], $row['customerID'], 
+                    $row['amountWanted'], $row['itemName'], $row['description'], $row['pawnOrSell']);
+            $items[] = $item;
+        }
+        return $items;
+    }
 
 }

@@ -133,6 +133,7 @@ switch ($action) {
         $displayName = $_SESSION['fName'] . " " . $_SESSION['lName'];
         $pawnedItems = DBitem::getItemsPawnedByCustomerID($_SESSION['userID']);
         $boughtItems = DBitem::getItemsBoughtByCustomerID($_SESSION['userID']);
+        $inquiryItems = DBitem::getItemsInquiryByCustomerID($_SESSION['userID']);
         include 'view\publicProfile.php';
         die();
         break;
@@ -145,7 +146,7 @@ switch ($action) {
     case 'adminProfile': /* go to admin profile page */
 
 
-        include 'view\publicProfile.php';
+        include 'view\adminProfile.php';
         die();
         break;
 

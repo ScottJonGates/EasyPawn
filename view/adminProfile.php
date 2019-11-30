@@ -13,7 +13,7 @@ and open the template in the editor.
     <body>
         <header>
             <h1>Easy Pawn</h1><br>
-            <p>Filling your Pawn Shop needs </p><br><br>
+            <p>Filling your Pawn Shop Administration Needs</p><br><br>
             <div id="userNav"><?php include 'nav.php'; ?></div>
         </header>
         <?php
