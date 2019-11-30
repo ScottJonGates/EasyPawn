@@ -64,6 +64,9 @@ switch ($action) {
         $lName = filter_input(INPUT_POST, 'lName');
         $uName = filter_input(INPUT_POST, 'uName');
         $password = filter_input(INPUT_POST, 'password');
+        $phoneNumber = filter_input(INPUT_POST, 'phoneNumber');
+        $email = filter_input(INPUT_POST, 'email');
+
         $isError = FALSE;
 
         if (Validate::LengthToShort($fName, 1) || Validate::LengthTolong($fName, 51)) {
@@ -85,12 +88,17 @@ switch ($action) {
             $isError = true;
             $errorPass = "User name must between 10 and 25 characters";
         }
+        if (!(preg_match("/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/", $phoneNumber))) { //https://stackoverflow.com/questions/3090862/how-to-validate-phone-number-using-php
+            $isError = true;
+            $errorPhoneNumber = "Phone pattern '402-123-4567'";
+        }
+
 
         if ($isError) {
             $action = 'getRegistered';
             include 'view\getRegistered.php';
         } else {
-            DBuser::insertNewUser($fName, $lName, $uName, $password);
+            DBuser::insertNewUser($fName, $lName, $uName, $password, $phoneNumber, $email);
             $user = DBuser::getUserByUserName($uName);
             $_SESSION['uName'] = $user->getUsername();
             $_SESSION['fName'] = $user->getFName();
@@ -152,7 +160,7 @@ switch ($action) {
 
     case 'customerListItem': /* go to admin profile page */
         $inquiryID = filter_input(INPUT_POST, 'inquiryID');
-        if ($inquiryID !== null || $inquiryID !== ''){
+        if ($inquiryID !== null || $inquiryID !== '') {
             $item = DBitem::getCustInquiryByID($inquiryID);
             $itemName = $item->getItemName();
             $description = $item->getDescription();
@@ -160,7 +168,7 @@ switch ($action) {
             $pawnOrSell = $item->getPawnOrSell();
             $_SESSION['inquiryID'] = $inquiryID;
         }
-        
+
         $action = 'customerListItem';
         $_SESSION['admin'];
         include 'view\customerListItem.php';
@@ -173,23 +181,23 @@ switch ($action) {
         $amountWanted = filter_input(INPUT_POST, 'amountWanted', FILTER_VALIDATE_FLOAT);
         $pawnOrSell = filter_input(INPUT_POST, 'pawnOrSell');
         $error = FALSE;
-        
+
         if (Validate::LengthToShort($itemName, 1) || Validate::LengthTolong($itemName, 51)) {
             $error = true;
             $errorItemName = "Item Name must between 2 and 50 characters long";
         }
-        
+
         if (Validate::LengthToShort($description, 1) || Validate::LengthTolong($description, 251)) {
             $error = true;
             $description = NULL;
             $errorDescription = "Description must between 2 and 250 characters long";
         }
-        
+
         if ($amountWanted == "" || $amountWanted == NULL) {
             $error = true;
             $errorAmountWanted = "Please enter a number";
         }
-        
+
         if ($error) {
             $action = 'customerListItem';
             $_SESSION['admin'];
@@ -198,17 +206,19 @@ switch ($action) {
             die();
             break;
         }
-        
-        if($_SESSION['inquiryID'] != null || $_SESSION['inquiryID'] != ''){
+
+        if ($_SESSION['inquiryID'] != null || $_SESSION['inquiryID'] != '') {
             DBitem::editCustInquiryByID($itemName, $description, $amountWanted, $pawnOrSell, $_SESSION['inquiryID']);
             $_SESSION['inquiryID'] = '';
-        }else {DBitem::insertnewCustInquiry($itemName, $description, $amountWanted, $pawnOrSell, $_SESSION['userID']);}
-        
+        } else {
+            DBitem::insertnewCustInquiry($itemName, $description, $amountWanted, $pawnOrSell, $_SESSION['userID']);
+        }
+
         header('Location: index.php?action=publicProfile');
         die();
         break;
 
-        
+
 
 
 

@@ -28,15 +28,17 @@ class DBuser {
         return $users;
     }
 
-    public static function insertNewUser($fName, $lName, $uName, $password) {
+    public static function insertNewUser($fName, $lName, $uName, $password, $phoneNumber, $email) {
         $db = Database::getDB();
-        $query = 'insert into users(fName, lName, username, password)
-                 VALUES (:first_name, :last_name, :user_name, :user_password)';
+        $query = 'insert into users(fName, lName, username, password, phoneNumber, email)
+                 VALUES (:first_name, :last_name, :user_name, :user_password, :phoneNumber, :email)';
         $statement = $db->prepare($query);
         $statement->bindValue(':first_name', $fName);
         $statement->bindValue(':last_name', $lName);
         $statement->bindValue(':user_name', $uName);
         $statement->bindValue(':user_password', $password);
+        $statement->bindValue(':phoneNumber', $phoneNumber);
+        $statement->bindValue(':email', $email);
         $statement->execute();
         $statement->closeCursor();
     }
