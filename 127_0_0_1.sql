@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2019 at 04:20 PM
+-- Generation Time: Dec 01, 2019 at 09:21 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -33,11 +33,23 @@ USE `easypawn`;
 CREATE TABLE `customerinquirytable` (
   `inquiryID` int(11) NOT NULL,
   `customerID` int(11) NOT NULL,
-`itemName` int(50) NOT NULL,
-`description` varchar(250) DEFAULT NULL,
-  `askingFor` float NOT NULL,
+  `itemName` varchar(50) NOT NULL,
+  `description` varchar(250) DEFAULT NULL,
+  `amountWanted` float NOT NULL,
   `pawnOrSell` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `customerinquirytable`
+--
+
+INSERT INTO `customerinquirytable` (`inquiryID`, `customerID`, `itemName`, `description`, `amountWanted`, `pawnOrSell`) VALUES
+(1, 3, 'Car', '1995 Ford Tauars sel', 2500, 'sell'),
+(2, 4, 'Jeffrey Epstein', 'Assisted Suicide', 750, 'sell'),
+(3, 4, 'Bob Denver', 'Sounds of Christmas', 55000, 'pawn'),
+(4, 4, 'Dick Cheney', 'Hunting tips', 1000, 'sell'),
+(5, 4, 'President Trump', 'How to disagree with other people without offending them', 750, 'pawn'),
+(6, 3, 'steel guitar ', 'once owned by Junior Brown', 2675, 'pawn');
 
 -- --------------------------------------------------------
 
@@ -134,14 +146,19 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`userID`, `fName`, `lName`, `username`, `email`, `phoneNumber`, `password`, `admin`) VALUES
-(1, 'Scott', 'Gates', 'Scott Jon Gates', NULL, NULL, 'Scott Jon Gates', 30),
-(2, 'Kelly', 'Gates', 'KGater4545', NULL, NULL, '45TYghbn1!', 30),
+(2, 'Kelly', 'Gates', 'KellyGates', NULL, NULL, 'KellyGates', 10),
 (3, 'Scott', 'Gates', 'ScottJonGates', NULL, NULL, 'ScottJonGates', 30),
 (4, 'Scott', 'Gates', 'ScottGates', NULL, NULL, 'ScottGates', 30);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `customerinquirytable`
+--
+ALTER TABLE `customerinquirytable`
+  ADD PRIMARY KEY (`inquiryID`);
 
 --
 -- Indexes for table `employee`
@@ -185,6 +202,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `customerinquirytable`
+--
+ALTER TABLE `customerinquirytable`
+  MODIFY `inquiryID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
@@ -212,7 +235,7 @@ ALTER TABLE `solditems`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
