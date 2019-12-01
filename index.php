@@ -65,7 +65,7 @@ switch ($action) {
         $uName = filter_input(INPUT_POST, 'uName');
         $password = filter_input(INPUT_POST, 'password');
         $phoneNumber = filter_input(INPUT_POST, 'phoneNumber');
-        $email = filter_input(INPUT_POST, 'email');
+        $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
 
         $isError = FALSE;
 
@@ -92,7 +92,7 @@ switch ($action) {
             $isError = true;
             $errorPhoneNumber = "Phone pattern '402-123-4567'";
         }
-        if (Validate::LengthToShort($email, 9) || Validate::LengthTolong($email, 26)) {
+        if (!($email)) {
             $isError = true;
             $errorEmail = "Please enter an Email";
         }
@@ -114,6 +114,68 @@ switch ($action) {
         }
         die();
         break;
+        
+    case 'insertEmployee':
+        $fName = filter_input(INPUT_POST, 'fName');
+        $lName = filter_input(INPUT_POST, 'lName');
+        $uName = filter_input(INPUT_POST, 'uName');
+        $password = filter_input(INPUT_POST, 'password');
+        $phoneNumber = filter_input(INPUT_POST, 'phoneNumber');
+        $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+        $hireDate = filter_input(INPUT_POST, 'hireDate');
+        $salary = filter_input(INPUT_POST, 'salary');
+
+        $isError = FALSE;
+
+        if (Validate::LengthToShort($fName, 1) || Validate::LengthTolong($fName, 51)) {
+            $isError = true;
+            $errorFName = "First name must between 2 and 50 characters";
+        }
+        if (Validate::LengthToShort($lName, 1) || Validate::LengthTolong($lName, 51)) {
+            $isError = true;
+            $errorLName = "Last name must between 2 and 50 characters";
+        }
+        if (Validate::LengthToShort($uName, 9) || Validate::LengthTolong($uName, 26)) { /* https://codereview.stackexchange.com/questions/55167/checking-empty-object */
+            $isError = true;
+            $errorUName = "User name must between 10 and 25 characters";
+        } else if (!(DBuser::getUserByUserName($uName)->getUsername() == NULL)) {
+            $isError = true;
+            $errorUName = "Someone already has that User Name";
+        }
+        if (Validate::LengthToShort($password, 9) || Validate::LengthTolong($password, 26)) {
+            $isError = true;
+            $errorPass = "User name must between 10 and 25 characters";
+        }
+        if (!(preg_match("/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/", $phoneNumber))) { //https://stackoverflow.com/questions/3090862/how-to-validate-phone-number-using-php
+            $isError = true;
+            $errorPhoneNumber = "Phone pattern '402-123-4567'";
+        }
+        if (!($email)) {
+            $isError = true;
+            $errorEmail = "Please enter an Email";
+        }
+
+
+        if ($isError) {
+            $action = 'newEmployeePage';
+            include 'view\newEmployee.php';
+        } else {
+            DBuser::insertNewUser($fName, $lName, $uName, $password, $phoneNumber, $email);
+            $user = DBuser::getUserByUserName($uName);
+            
+            DBuser::insertNewEmployee($user->getUserID(), $hireDate, $salary);
+            $user = DBuser::getUserByUserName($uName);
+            $_SESSION['uName'] = $user->getUsername();
+            $_SESSION['fName'] = $user->getFName();
+            $_SESSION['lName'] = $user->getLName();
+            $_SESSION['userID'] = $user->getUserID();
+            $_SESSION['admin'] = $user->getAdmin();
+
+            header('Location: index.php?action=newEmployeePage');
+        }
+        die();
+        break;
+        
     case 'checkLogin':
         $uName = filter_input(INPUT_POST, 'uName');
         $password = filter_input(INPUT_POST, 'password');

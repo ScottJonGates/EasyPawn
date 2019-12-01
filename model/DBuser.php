@@ -43,6 +43,21 @@ class DBuser {
         $statement->closeCursor();
     }
     
+    public static function insertNewEmployee($userID , $hireDate, $salary) {
+        $db = Database::getDB();
+        $query = 'insert into employee(userID, hireDate, salary)
+                 VALUES (:userID, :hireDate, :salary)';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':userID', $userID);
+        $statement->bindValue(':hireDate', $hireDate);
+        $statement->bindValue(':salary', $salary);
+        $statement->execute();
+        $statement->closeCursor();
+        
+        DBuser::setEmployee($userID);
+        
+    }
+    
     public static function getUserPasswordByID($userID) {
         $db = Database::getDB();
 
@@ -124,6 +139,16 @@ class DBuser {
     public static function removeEmpByUserID($userID) {
         $db = Database::getDB();
         $query = 'update users set admin = 30
+                 WHERE userID = :userID';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':userID', $userID);
+        $statement->execute();
+        $statement->closeCursor();
+    }
+    
+    public static function setEmployee($userID) {
+        $db = Database::getDB();
+        $query = 'update users set admin = 20
                  WHERE userID = :userID';
         $statement = $db->prepare($query);
         $statement->bindValue(':userID', $userID);

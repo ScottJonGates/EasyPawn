@@ -25,7 +25,7 @@
         Enter a New Employee</button>
 
     <button class="button" onclick="location.href = 'index.php?action=adminProfile'" type="button" title="To Admin Page"><!--  To welcome page  -->
-        Back to Admin Page</button>
+        Back to Administration Page</button>
 
     <button class="button" onclick="location.href = 'index.php?action=welcome'" type="button" title="Login in as a New User"><!--  To welcome page  -->
         Login Page as New User</button>
