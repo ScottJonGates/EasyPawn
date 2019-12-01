@@ -220,7 +220,7 @@ switch ($action) {
         die();
         break;
     case 'adminProfile': /* go to admin profile page */
-
+        $employees = DBuser::getEmployees();
 
         include 'view\adminProfile.php';
         die();

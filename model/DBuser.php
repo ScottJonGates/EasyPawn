@@ -35,7 +35,7 @@ class DBuser {
                     from users as u
                     JOIN employee as e
                     on u.userID = e.userID
-                    where u.admin = 20';
+                    where u.admin = 20 or 10';
         $statement = $db->prepare($query);
         $statement->execute();
         $results = $statement->fetchAll();
