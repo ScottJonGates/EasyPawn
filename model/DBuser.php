@@ -27,6 +27,28 @@ class DBuser {
         }
         return $users;
     }
+    
+    public static function getEmployees() {
+        $db = Database::getDB();
+
+        $query = 'select * 
+                    from users as u
+                    JOIN employee as e
+                    on u.userID = e.userID
+                    where u.admin = 20';
+        $statement = $db->prepare($query);
+        $statement->execute();
+        $results = $statement->fetchAll();
+        $statement->closeCursor();
+        $emps = array();
+        foreach ($results as $row) {
+            $emp = new employee($row['hireDate'], $row['salary'], $row['userID'], $row['fName'], 
+                    $row['lName'], $row['username'], $row['email'], $row['phoneNumber'], $row['admin']);
+            
+            $emps[] = $emp;
+        }
+        return $emps;
+    }
 
     public static function insertNewUser($fName, $lName, $uName, $password, $phoneNumber, $email) {
         $db = Database::getDB();

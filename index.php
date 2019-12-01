@@ -2,14 +2,16 @@
 
 <?php
 require_once('model/validate.php');
-require_once('model/user.php');
 require_once('model/databaseCall.php');
+require_once('model/user.php');
+require_once('model/employee.php');
 require_once('model/DBuser.php');
 require_once('model/DBitem.php');
 require_once('model/item.php');
 require_once('model/pawnItems.php');
 require_once('model/soldItems.php');
 require_once('model/custInquiryItem.php');
+
 
 session_start();
 if (!isset($errorType)) {
