@@ -161,6 +161,13 @@ switch ($action) {
         include 'view\adminProfile.php';
         die();
         break;
+    
+    case 'newEmployeePage': /* go to admin profile page */
+
+
+        include 'view\newEmployee.php';
+        die();
+        break;
 
     case 'customerListItem': /* go to admin profile page */
         $inquiryID = filter_input(INPUT_POST, 'inquiryID');

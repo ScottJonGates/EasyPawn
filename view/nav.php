@@ -18,6 +18,17 @@
 
     <button class="button" onclick="location.href = 'index.php?action=welcome'" type="button" title="Login in as a New User"><!--  To welcome page  -->
         Login Page as New User</button>
+
+<?php } else if ($action === 'adminProfile' || $action === 'newEmployeePage') { ?> 
+
+    <button class="button" onclick="location.href = 'index.php?action=newEmployeePage'" type="button" title="Enter a New Employee"><!--  To welcome page  -->
+        Enter a New Employee</button>
+
+    <button class="button" onclick="location.href = 'index.php?action=adminProfile'" type="button" title="To Admin Page"><!--  To welcome page  -->
+        Back to Admin Page</button>
+
+    <button class="button" onclick="location.href = 'index.php?action=welcome'" type="button" title="Login in as a New User"><!--  To welcome page  -->
+        Login Page as New User</button>
     <?php
 } 
 

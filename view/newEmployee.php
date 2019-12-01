@@ -45,7 +45,7 @@ and open the template in the editor.
     <body>
         <header>
             <h1>Easy Pawn</h1><br>
-            <p>List an Item that you want us to consider for Sell or Pawn  </p><br><br>
+            <p>New Employee entry </p><br><br>
             <div id="userNav"><?php include 'nav.php'; ?></div>
         </header>
         <main>
@@ -68,28 +68,7 @@ and open the template in the editor.
                             <?php } ?></td>
                     </tr>
 
-                    <tr>
-                        <td class='lineRight'>Amount Wanted</td>
-                        <td> <input type="text" name="amountWanted" 
-                                    value="<?php echo htmlspecialchars($amountWanted); ?>"><br>
-                                    <?php if (!empty($errorAmountWanted)) { ?>
-                                <span class="error"><?php echo htmlspecialchars($errorAmountWanted); ?></span>
-                            <?php } ?></td>
-                        <td>&nbsp;&nbsp;&nbsp;</td>
-                        <td class='lineRight'>For</td>
-                        <td> <input type="radio" name="pawnOrSell" value="pawn" 
-                            <?php if ($pawnOrSell === '' || $pawnOrSell === 'pawn') { ?>checked
-                            <?php } ?>> Pawn &nbsp;&nbsp;&nbsp;&nbsp;
-                            
-                            <input type="radio" name="pawnOrSell" value="sell" 
-                                <?php if ($pawnOrSell === 'sell') { ?>checked
-                            <?php } ?>> Sell
-                            <br>
-                            <?php if (!empty($errorPawnOrSale)) { ?>
-                                <span class="error"><?php echo htmlspecialchars($errorpawnOrSell); ?></span>
-                            <?php } ?></td>
-
-                    </tr>
+                   
 
                 </table>
 
