@@ -21,6 +21,23 @@ class employee extends User{
         
         User::__construct($userID, $fName, $lName, $username, $email, $phoneNumber, $admin);
     }
+    
+    function getHireDate() {
+        return $this->hireDate;
+    }
 
+    function getSalary() {
+        return $this->salary;
+    }
+
+    function setHireDate($hireDate) {
+        $this->hireDate = $hireDate;
+    }
+
+    function setSalary($salary) {
+        $this->salary = $salary;
+    }
+
+    
     //put your code here
 }

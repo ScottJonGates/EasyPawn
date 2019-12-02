@@ -221,7 +221,7 @@ switch ($action) {
         break;
     case 'adminProfile': /* go to admin profile page */
         $employees = DBuser::getEmployees();
-
+        $current = $_SESSION['userID'];
         include 'view\adminProfile.php';
         die();
         break;
