@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 01, 2019 at 09:21 PM
+-- Generation Time: Dec 02, 2019 at 05:36 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -62,6 +62,15 @@ CREATE TABLE `employee` (
   `hireDate` date NOT NULL,
   `salary` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `employee`
+--
+
+INSERT INTO `employee` (`userID`, `hireDate`, `salary`) VALUES
+(2, '2019-05-24', 65000),
+(13, '2019-05-24', 45000),
+(14, '2019-05-24', 35000);
 
 -- --------------------------------------------------------
 
@@ -146,9 +155,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`userID`, `fName`, `lName`, `username`, `email`, `phoneNumber`, `password`, `admin`) VALUES
-(2, 'Kelly', 'Gates', 'KellyGates', NULL, NULL, 'KellyGates', 10),
+(2, 'Scott', 'Gates', 'Gman123456', 'sgates699@windstream.net', 'NewPassword', 'KellyGates', 10),
 (3, 'Scott', 'Gates', 'ScottJonGates', NULL, NULL, 'ScottJonGates', 30),
-(4, 'Scott', 'Gates', 'ScottGates', NULL, NULL, 'ScottGates', 30);
+(4, 'Scott', 'Gates', 'ScottGates', NULL, NULL, 'ScottGates', 30),
+(13, 'Scott', 'Gates', 'Gman123456', 'sgates699@windstream.net', 'NewPassword', 'NewPassword', 20),
+(14, 'Scott', 'Gates', 'Gman123456', 'sgates699@windstream.net', 'NewPassword', 'ScottGatesScottGates', 20);
 
 --
 -- Indexes for dumped tables
@@ -194,8 +205,7 @@ ALTER TABLE `solditems`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`userID`),
-  ADD UNIQUE KEY `username` (`username`);
+  ADD PRIMARY KEY (`userID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -235,7 +245,7 @@ ALTER TABLE `solditems`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

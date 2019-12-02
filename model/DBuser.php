@@ -12,6 +12,7 @@
  * @author Scott
  */
 class DBuser {
+
     public static function getUsers() {
         $db = Database::getDB();
 
@@ -27,7 +28,7 @@ class DBuser {
         }
         return $users;
     }
-    
+
     public static function getEmployees() {
         $db = Database::getDB();
 
@@ -42,12 +43,30 @@ class DBuser {
         $statement->closeCursor();
         $emps = array();
         foreach ($results as $row) {
-            $emp = new employee($row['hireDate'], $row['salary'], $row['userID'], $row['fName'], 
-                    $row['lName'], $row['username'], $row['email'], $row['phoneNumber'], $row['admin']);
-            
+            $emp = new employee($row['hireDate'], $row['salary'], $row['userID'], $row['fName'], $row['lName'], $row['username'], $row['email'], $row['phoneNumber'], $row['admin']);
+
             $emps[] = $emp;
         }
         return $emps;
+    }
+
+    public static function getEmployeeByID($userID) {
+        $db = Database::getDB();
+
+        $query = 'select * 
+                    from users as u
+                    JOIN employee as e
+                    on u.userID = e.userID
+                    where u.userID = :userID';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':userID', $userID);
+        $statement->execute();
+        $row = $statement->fetch();
+        $statement->closeCursor();
+
+        $emp = new employee($row['hireDate'], $row['salary'], $row['userID'], $row['fName'], $row['lName'], $row['username'], $row['email'], $row['phoneNumber'], $row['admin']);
+
+        return $emp;
     }
 
     public static function insertNewUser($fName, $lName, $uName, $password, $phoneNumber, $email) {
@@ -64,8 +83,8 @@ class DBuser {
         $statement->execute();
         $statement->closeCursor();
     }
-    
-    public static function insertNewEmployee($userID , $hireDate, $salary) {
+
+    public static function insertNewEmployee($userID, $hireDate, $salary) {
         $db = Database::getDB();
         $query = 'insert into employee(userID, hireDate, salary)
                  VALUES (:userID, :hireDate, :salary)';
@@ -75,11 +94,10 @@ class DBuser {
         $statement->bindValue(':salary', $salary);
         $statement->execute();
         $statement->closeCursor();
-        
+
         DBuser::setEmployee($userID);
-        
     }
-    
+
     public static function getUserPasswordByID($userID) {
         $db = Database::getDB();
 
@@ -91,14 +109,14 @@ class DBuser {
         $statement->execute();
         $row = $statement->fetch();
         $statement->closeCursor();
-        
+
         $password = $row['password'];
         return $password;
     }
-    
+
     public static function getUserByUserName($uName) {
         $db = Database::getDB();
-        
+
         $query = 'select * 
                  from users 
                  WHERE username = :username';
@@ -108,11 +126,10 @@ class DBuser {
         $row = $statement->fetch();
         $statement->closeCursor();
         $user = new User($row['userID'], $row['fName'], $row['lName'], $row['username'], $row['email'], $row['phoneNumber'], $row['admin']);
-        
+
         return $user;
-        
     }
-    
+
     public static function getUserByID($userID) {
         $db = Database::getDB();
         $query = 'select * 
@@ -127,9 +144,9 @@ class DBuser {
         return $user;
     }
 
-    public static function deleteUserByItemID($userID){
+    public static function deleteUserByUserID($userID) {
         $db = Database::getDB();
-        
+
         $query = 'DELETE from users 
                  WHERE userID = :userID';
         $statement = $db->prepare($query);
@@ -137,7 +154,7 @@ class DBuser {
         $statement->execute();
         $statement->closeCursor();
     }
-    
+
     public static function AddAdminByUserID($userID) {
         $db = Database::getDB();
         $query = 'update users set admin = 10
@@ -147,7 +164,7 @@ class DBuser {
         $statement->execute();
         $statement->closeCursor();
     }
-    
+
     public static function removeAdminByUserID($userID) {
         $db = Database::getDB();
         $query = 'update users set admin = 20
@@ -157,7 +174,7 @@ class DBuser {
         $statement->execute();
         $statement->closeCursor();
     }
-    
+
     public static function removeEmpByUserID($userID) {
         $db = Database::getDB();
         $query = 'update users set admin = 30
@@ -167,7 +184,7 @@ class DBuser {
         $statement->execute();
         $statement->closeCursor();
     }
-    
+
     public static function setEmployee($userID) {
         $db = Database::getDB();
         $query = 'update users set admin = 20
@@ -178,6 +195,44 @@ class DBuser {
         $statement->closeCursor();
     }
 
-    
+    public static function isCurrentEmployee($uName) {
+        $db = Database::getDB();
+        $query = 'select * 
+                 from users
+                 WHERE userID = :userID';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':userID', $userID);
+        $statement->execute();
+        $row = $statement->fetch();
+        $statement->closeCursor();
+        $user = new User($row['userID'], $row['fName'], $row['lName'], $row['username'], $row['email'], $row['phoneNumber'], $row['admin']);
+        $flag = TRUE;
+        if (empty($user)) {
+            $flag = FALSE;
+        }
+        return $flag;
+    }
+
+    public static function updateEmployee($fName, $lName, $uName, $password, $phoneNumber, $email, $hireDate, $salary) {
+        $db = Database::getDB();
+        $query = 'UPDATE employee as e
+                    JOIN users as u
+                    on e.userID = u.userID
+                    SET u.fName = :first_name, u.lName = :last_name, u.username = :user_name,
+                    u.email = :email, u.phoneNumber = :user_password, e.hireDate = :hireDate,
+                    e.salary = :salary
+                    WHERE u.userID = u.userID';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':first_name', $fName);
+        $statement->bindValue(':last_name', $lName);
+        $statement->bindValue(':user_name', $uName);
+        $statement->bindValue(':user_password', $password);
+        $statement->bindValue(':phoneNumber', $phoneNumber);
+        $statement->bindValue(':email', $email);
+        $statement->bindValue(':hireDate', $hireDate);
+        $statement->bindValue(':salary', $salary);
+        $statement->execute();
+        $statement->closeCursor();
+    }
 
 }

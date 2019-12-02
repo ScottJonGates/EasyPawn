@@ -35,7 +35,9 @@ if (!isset($_SESSION['admin'])) {
 if (!isset($_SESSION['inquiryID'])) {
     $_SESSION['inquiryID'] = '';
 }
-
+if (!isset($_SESSION['EmpModID'])) {
+    $_SESSION['EmpModID'] = '';
+}
 
 
 $action = filter_input(INPUT_POST, 'action');
@@ -116,7 +118,7 @@ switch ($action) {
         }
         die();
         break;
-        
+
     case 'insertEmployee':
         $fName = filter_input(INPUT_POST, 'fName');
         $lName = filter_input(INPUT_POST, 'lName');
@@ -126,6 +128,7 @@ switch ($action) {
         $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
         $hireDate = filter_input(INPUT_POST, 'hireDate');
         $salary = filter_input(INPUT_POST, 'salary');
+        $userID = filter_input(INPUT_POST, 'userID');
 
         $isError = FALSE;
 
@@ -140,7 +143,7 @@ switch ($action) {
         if (Validate::LengthToShort($uName, 9) || Validate::LengthTolong($uName, 26)) { /* https://codereview.stackexchange.com/questions/55167/checking-empty-object */
             $isError = true;
             $errorUName = "User name must between 10 and 25 characters";
-        } else if (!(DBuser::getUserByUserName($uName)->getUsername() == NULL)) {
+        } else if (!(DBuser::getUserByUserName($uName)->getUsername() == NULL) && $_SESSION['EmpModID'] === '') {
             $isError = true;
             $errorUName = "Someone already has that User Name";
         }
@@ -162,22 +165,31 @@ switch ($action) {
             $action = 'newEmployeePage';
             include 'view\newEmployee.php';
         } else {
-            DBuser::insertNewUser($fName, $lName, $uName, $password, $phoneNumber, $email);
-            $user = DBuser::getUserByUserName($uName);
-            
-            DBuser::insertNewEmployee($user->getUserID(), $hireDate, $salary);
-            $user = DBuser::getUserByUserName($uName);
-            $_SESSION['uName'] = $user->getUsername();
-            $_SESSION['fName'] = $user->getFName();
-            $_SESSION['lName'] = $user->getLName();
-            $_SESSION['userID'] = $user->getUserID();
-            $_SESSION['admin'] = $user->getAdmin();
+
+            if (DBuser::isCurrentEmployee($uName)) {
+                DBuser::updateEmployee($fName, $lName, $uName, $password, $phoneNumber, $email, $hireDate, $salary);
+                $_SESSION['EmpModID'] === '';
+            } else {
+                DBuser::insertNewUser($fName, $lName, $uName, $password, $phoneNumber, $email);
+                $user = DBuser::getUserByUserName($uName);
+
+                DBuser::insertNewEmployee($user->getUserID(), $hireDate, $salary);
+                $user = DBuser::getUserByUserName($uName);
+                $_SESSION['uName'] = $user->getUsername();
+                $_SESSION['fName'] = $user->getFName();
+                $_SESSION['lName'] = $user->getLName();
+                $_SESSION['userID'] = $user->getUserID();
+                $_SESSION['admin'] = $user->getAdmin();
+                $_SESSION['EmpModID'] === '';
+            }
+
+
 
             header('Location: index.php?action=newEmployeePage');
         }
         die();
         break;
-        
+
     case 'checkLogin':
         $uName = filter_input(INPUT_POST, 'uName');
         $password = filter_input(INPUT_POST, 'password');
@@ -225,10 +237,21 @@ switch ($action) {
         include 'view\adminProfile.php';
         die();
         break;
-    
+
     case 'newEmployeePage': /* go to admin profile page */
-
-
+        $userID = filter_input(INPUT_POST, 'userID');
+        if ($userID !== null || $userID !== '') {
+            $emp = DBuser::getEmployeeByID($userID);
+            $fName = $emp->getFName();
+            $lName = $emp->getLName();
+            $uName = $emp->getUsername();
+            $uPass = DBuser::getUserPasswordByID($userID);
+            $phoneNumber = $emp->getPhoneNumber();
+            $email = $emp->getEmail();
+            $hireDate = $emp->getHireDate();
+            $salary = $emp->getSalary();
+            $_SESSION['EmpModID'] = $userID;
+        }
         include 'view\newEmployee.php';
         die();
         break;

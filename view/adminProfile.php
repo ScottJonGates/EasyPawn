@@ -45,7 +45,7 @@ and open the template in the editor.
                                     <form action="index.php" method="post">
                                         <input type="hidden" name="action"
                                                value="makeAdmin">
-                                        <input type="hidden" name="itemID"
+                                        <input type="hidden" name="userID"
                                                value="<?php echo htmlspecialchars($emp->getUserID()); ?>">
                                         <input type="submit" value="Make Employee">
                                     </form>
@@ -54,8 +54,8 @@ and open the template in the editor.
                             <td>
                                 <form action="index.php" method="post">
                                     <input type="hidden" name="action"
-                                           value="modifyEmployee">
-                                    <input type="hidden" name="itemID"
+                                           value="newEmployeePage">
+                                    <input type="hidden" name="userID"
                                            value="<?php echo htmlspecialchars($emp->getUserID()); ?>">
                                     <input type="submit" value="Modify">
                                 </form>

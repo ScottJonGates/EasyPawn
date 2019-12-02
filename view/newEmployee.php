@@ -4,6 +4,9 @@
 if (!isset($fName)) {
     $fName = '';
 }
+if (!isset($userID)) {
+    $userID = '';
+}
 if (!isset($lName)) {
     $lName = '';
 }
@@ -22,7 +25,9 @@ if (!isset($hireDate)) {
 if (!isset($salary)) {
     $salary = '';
 }
-
+if (!isset($uPass)) {
+    $uPass = '';
+}
 
 
 if (!isset($registerError)) {
@@ -71,7 +76,7 @@ and open the template in the editor.
             <div id="userNav"><?php include 'nav.php'; ?></div>
         </header>
         <main>
-
+            
             <form id="inputform" action="index.php" method="post">
                 <input type="hidden" name="action" value="insertEmployee" />
                 <table id='no_border'>
@@ -100,7 +105,7 @@ and open the template in the editor.
                         <td>&nbsp;&nbsp;&nbsp;</td>
                         <td class='lineRight'>Password</td>
                         <td> <input type="text" name="password" 
-                                    value=""><br>
+                                    value="<?php echo htmlspecialchars($uPass); ?>"><br>
                                     <?php if (!empty($errorPass)) { ?>
                                 <span class="error"><?php echo htmlspecialchars($errorPass); ?></span>
                             <?php } ?></td>
