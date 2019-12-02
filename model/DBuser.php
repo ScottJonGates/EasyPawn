@@ -213,15 +213,15 @@ class DBuser {
         return $flag;
     }
 
-    public static function updateEmployee($fName, $lName, $uName, $password, $phoneNumber, $email, $hireDate, $salary) {
+    public static function updateEmployee($fName, $lName, $uName, $password, $phoneNumber, $email, $hireDate, $salary, $userID ) {
         $db = Database::getDB();
         $query = 'UPDATE employee as e
                     JOIN users as u
                     on e.userID = u.userID
                     SET u.fName = :first_name, u.lName = :last_name, u.username = :user_name,
-                    u.email = :email, u.phoneNumber = :user_password, e.hireDate = :hireDate,
-                    e.salary = :salary
-                    WHERE u.userID = u.userID';
+                    u.email = :email, u.phoneNumber = :phoneNumber, e.hireDate = :hireDate,
+                    e.salary = :salary, u.password = :user_password
+                    WHERE u.userID = :userID';
         $statement = $db->prepare($query);
         $statement->bindValue(':first_name', $fName);
         $statement->bindValue(':last_name', $lName);
@@ -231,6 +231,7 @@ class DBuser {
         $statement->bindValue(':email', $email);
         $statement->bindValue(':hireDate', $hireDate);
         $statement->bindValue(':salary', $salary);
+        $statement->bindValue(':userID', $userID);
         $statement->execute();
         $statement->closeCursor();
     }

@@ -167,7 +167,7 @@ switch ($action) {
         } else {
 
             if (DBuser::isCurrentEmployee($uName)) {
-                DBuser::updateEmployee($fName, $lName, $uName, $password, $phoneNumber, $email, $hireDate, $salary);
+                DBuser::updateEmployee($fName, $lName, $uName, $password, $phoneNumber, $email, $hireDate, $salary, $_SESSION['EmpModID']);
                 $_SESSION['EmpModID'] === '';
             } else {
                 DBuser::insertNewUser($fName, $lName, $uName, $password, $phoneNumber, $email);
