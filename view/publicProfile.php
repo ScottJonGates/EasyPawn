@@ -75,7 +75,7 @@ and open the template in the editor.
                             </form></td>
                     </tr>
                 <?php endforeach; ?>
-            
+            </table>
         </main>
     </body>
 </html>

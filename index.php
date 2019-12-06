@@ -168,7 +168,7 @@ switch ($action) {
 
             if (DBuser::isCurrentEmployee($uName)) {
                 DBuser::updateEmployee($fName, $lName, $uName, $password, $phoneNumber, $email, $hireDate, $salary, $_SESSION['EmpModID']);
-                $_SESSION['EmpModID'] === '';
+                $_SESSION['EmpModID'] = '';
             } else {
                 DBuser::insertNewUser($fName, $lName, $uName, $password, $phoneNumber, $email);
                 $user = DBuser::getUserByUserName($uName);
@@ -180,7 +180,7 @@ switch ($action) {
                 $_SESSION['lName'] = $user->getLName();
                 $_SESSION['userID'] = $user->getUserID();
                 $_SESSION['admin'] = $user->getAdmin();
-                $_SESSION['EmpModID'] === '';
+                $_SESSION['EmpModID'] = '';
             }
 
 
@@ -226,6 +226,7 @@ switch ($action) {
         die();
         break;
     case 'employeeProfile': /* go to employee profile page */
+        $inquiryItems = DBitem::getAllCustInquiryItems();
 
 
         include 'view\employeeProfile.php';
@@ -316,9 +317,21 @@ switch ($action) {
         die();
         break;
 
+    case 'inspectItem':
 
+        $inquiryID = filter_input(INPUT_POST, 'inquiryID');
+        if ($inquiryID !== null || $inquiryID !== '') {
+            $item = DBitem::getCustInquiryByID($inquiryID);
+            $itemName = $item->getItemName();
+            $description = $item->getDescription();
+            $amountWanted = $item->getAmountWanted();
+            $pawnOrSell = $item->getPawnOrSell();
+            $_SESSION['inquiryID'] = $inquiryID;
+        }
 
-
+        include 'view\empInspectItemPage.php';
+        die();
+        break;
 
 
 

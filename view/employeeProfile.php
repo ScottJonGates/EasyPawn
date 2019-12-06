@@ -16,8 +16,32 @@ and open the template in the editor.
             <p>Double Check Your Work, Remember Garbage in Garbage Out</p><br><br>
             <div id="userNav"><?php include 'nav.php'; ?></div>
         </header>
-        <?php
-        // put your code here
-        ?>
+        <main>
+            <h1>Items you have Offered</h1>
+            <table>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Pawn or Sell</th>
+                    <th>Description</th>
+                    <th>Amount Wanted</th>
+                    <th>&nbsp;</th>
+                </tr>
+                <?php foreach ($inquiryItems as $item) : ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($item->getItemName()); ?></td>
+                        <td><?php echo htmlspecialchars($item->getPawnOrSell()); ?></td>
+                        <td><?php echo htmlspecialchars($item->getDescription()); ?></td>
+                        <td><?php echo htmlspecialchars($item->getAmountWanted()); ?></td>
+                        <td><form action="index.php" method="post">
+                                <input type="hidden" name="action"
+                                       value="inspectItem">
+                                <input type="hidden" name="inquiryID"
+                                       value="<?php echo htmlspecialchars($item->getInquiryID()); ?>">
+                                <input type="submit" value="Edit">
+                            </form></td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        </main>
     </body>
 </html>
