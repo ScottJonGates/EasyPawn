@@ -91,7 +91,7 @@ class DBitem {
 
         $items = array();
         foreach ($results as $row) {
-            $item = new custInquiryItem($row['inquiryID'], $row['customerID'], $row['askingFor'], $row['pawnOrSell']);
+            $item = new custInquiryItem($row['inquiryID'], $row['customerID'], $row['amountWanted'], $row['itemName'], $row['description'], $row['pawnOrSell']);
 
             $items[] = $item;
         }
