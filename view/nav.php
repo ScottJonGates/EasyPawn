@@ -29,6 +29,12 @@
 
     <button class="button" onclick="location.href = 'index.php?action=welcome'" type="button" title="Login in as a New User"><!--  To welcome page  -->
         Login Page as New User</button>
+    <?php } else if ($action === 'employeeProfile' || $action === 'inspectItem') { ?>
+
+    <button class="button" onclick="location.href = 'index.php?action=employeeProfile'" type="button" title="Employee Profile Page"><!--  To welcome page  -->
+        Enter a New Employee</button>
+
+    
     <?php
 } 
 

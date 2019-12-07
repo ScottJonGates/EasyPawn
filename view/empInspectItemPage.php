@@ -13,6 +13,10 @@ if (!isset($amountWanted)) {
 if (!isset($pawnOrSell)) {
     $pawnOrSell = '';
 }
+if (!isset($amountOwed)) {
+    $amountOwed = '';
+}
+
 if (!isset($errorItemName)) {
     $errorItemName = '';
 }
@@ -29,6 +33,9 @@ if (!isset($errorpawnOrSell)) {
 if (!isset($errorDate)) {
     $errorDate = '';
 }
+if (!isset($errorAmountOwed)) {
+    $errorAmountOwed = '';
+}
 ?>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -39,7 +46,6 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title>Easy Pawn</title>
-        
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         
@@ -73,12 +79,35 @@ and open the template in the editor.
                     </tr>
 
                     <tr>
-                        <td class='lineRight'>Amount Wanted</td>
+                        <td class='lineRight'>Amount Given</td>
                         <td> <input type="text" name="amountWanted" 
                                     value="<?php echo htmlspecialchars($amountWanted); ?>"><br>
                                     <?php if (!empty($errorAmountWanted)) { ?>
                                 <span class="error"><?php echo htmlspecialchars($errorAmountWanted); ?></span>
                             <?php } ?></td>
+                        <td>&nbsp;&nbsp;&nbsp;</td>
+                        <td class='lineRight'>Amount Owed/Price</td>
+                        <td> <input type="text" name="amountOwed" 
+                                    value="<?php echo htmlspecialchars($amountOwed); ?>"><br>
+                                    <?php if (!empty($errorAmountOwed)) { ?>
+                                <span class="error"><?php echo htmlspecialchars($errorAmountOwed); ?></span>
+                            <?php } ?></td>
+                    </tr>
+                    <tr>
+                        <td><label class="control-label">Pick a Date</label></td>
+                        <td>
+                            <div class='input-group date' id='datetimepicker'>
+                            
+                            <input type='text' name="date" class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar">
+                                </span>
+                            </span>
+                        </div>
+                            <?php if (!empty($errorDate)) { ?>
+                                <span class="error"><?php echo htmlspecialchars($errorDate); ?></span>
+                            <?php } ?>
+                        </td>
                         <td>&nbsp;&nbsp;&nbsp;</td>
                         <td class='lineRight'>For</td>
                         <td> <input type="radio" name="pawnOrSell" value="pawn" 
@@ -93,24 +122,6 @@ and open the template in the editor.
                                 <span class="error"><?php echo htmlspecialchars($errorpawnOrSell); ?></span>
                             <?php } ?>
                         </td>
-                    </tr>
-                    <tr>
-                        <td><label class="control-label">Pick a Date</label></td>
-                        <td>
-                            <div class='input-group date' id='datetimepicker'>
-                            
-                            <input type='text' name="date" class="form-control" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar">
-                                </span>
-                            </span>
-                        </div>
-                            
-                        </td>
-                        <td><?php if (!empty($errorDate)) { ?>
-                                <span class="error"><?php echo htmlspecialchars($errorDate); ?></span>
-                            <?php } ?></td>
-                        
                     </tr>
 
                 </table>

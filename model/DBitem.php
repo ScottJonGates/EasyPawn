@@ -80,7 +80,7 @@ class DBitem {
     }
 
     public static function getAllCustInquiryItems() {
-       $db = Database::getDB();
+        $db = Database::getDB();
 
         $query = 'select * 
                     from customerinquirytable';
@@ -172,12 +172,11 @@ class DBitem {
         $statement->bindValue(':pawnOrSell', $pawnOrSell);
         $statement->execute();
         $statement->closeCursor();
-        
     }
-    
-    public static function editCustInquiryByID($itemName, $description, $amountWanted, $pawnOrSell,$inquiryID) {
+
+    public static function editCustInquiryByID($itemName, $description, $amountWanted, $pawnOrSell, $inquiryID) {
         $db = Database::getDB();
-        
+
         $query = 'update customerinquirytable set itemName = :itemName, description = :description, 
                 amountWanted = :amountWanted, pawnOrSell = :pawnOrSell
                 WHERE inquiryID = :inquiryID';
@@ -222,8 +221,7 @@ class DBitem {
 
         $items = array();
         foreach ($results as $row) {
-            $item = new custInquiryItem($row['inquiryID'], $row['customerID'], 
-                    $row['amountWanted'], $row['itemName'], $row['description'], $row['pawnOrSell']);
+            $item = new custInquiryItem($row['inquiryID'], $row['customerID'], $row['amountWanted'], $row['itemName'], $row['description'], $row['pawnOrSell']);
             $items[] = $item;
         }
         return $items;
@@ -236,6 +234,64 @@ class DBitem {
                     WHERE inquiryID = :inquiryID';
         $statement = $db->prepare($query);
         $statement->bindValue(':inquiryID', $inquiryID);
+        $statement->execute();
+        $statement->closeCursor();
+    }
+
+    public static function insertItem($itemName, $description) {
+        $db = Database::getDB();
+        $query = 'INSERT INTO items(itemName, description) 
+                    VALUES (:itemName,:description)';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':itemName', $itemName);
+        $statement->bindValue(':description', $description);
+        $statement->execute();
+        $statement->closeCursor();
+    }
+
+    public static function getNewItem() {
+        
+        $db = Database::getDB();
+
+        $query = 'SELECT * 
+                    FROM items as i 
+                    WHERE itemID NOT IN (SELECT itemID FROM pawnitems) 
+                    OR itemID NOT IN (SELECT itemID FROM inventory) 
+                    OR itemID NOT IN (SELECT itemID FROM solditems)';
+        $statement = $db->prepare($query);
+        $statement->execute();
+        $row = $statement->fetch();
+        $statement->closeCursor();
+        
+        $item = new item($row['itemID'], $row['itemName'], $row['description']);
+        
+        return $item;
+    }
+
+    public static function insertNewInventoryItem($itemID, $dateInserted, $boughtFor, $askingPrice, $employeeID) {
+        $db = Database::getDB();
+        $query = 'INSERT INTO inventory(itemID, employeeID, dateInserted, boughtFor, askingPrice)
+                                VALUES (:itemID,:employeeID,:dateInserted,:boughtFor,:askingPrice)';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':itemID', $itemID);
+        $statement->bindValue(':employeeID', $employeeID);
+        $statement->bindValue(':dateInserted', $dateInserted);
+        $statement->bindValue(':boughtFor', $boughtFor);
+        $statement->bindValue(':askingPrice', $askingPrice);
+        $statement->execute();
+        $statement->closeCursor();
+    }
+
+    public static function insertNewPawnItem($itemID, $customerID, $dateRecieved, $loanAmount, $employeeID) {
+        $db = Database::getDB();
+        $query = 'INSERT INTO pawnitems(itemID, customerID, dateRecieved, loanAmount, employeeID)
+                VALUES (:itemID, :customerID, :dateRecieved, :loanAmount, :employeeID)';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':itemID', $itemID);
+        $statement->bindValue(':customerID', $customerID);
+        $statement->bindValue(':dateRecieved', $dateRecieved);
+        $statement->bindValue(':loanAmount', $loanAmount);
+        $statement->bindValue(':employeeID', $employeeID);
         $statement->execute();
         $statement->closeCursor();
     }

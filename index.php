@@ -337,6 +337,7 @@ switch ($action) {
         $itemName = filter_input(INPUT_POST, 'itemName');
         $description = filter_input(INPUT_POST, 'description');
         $amountWanted = filter_input(INPUT_POST, 'amountWanted', FILTER_VALIDATE_FLOAT);
+        $amountOwed = filter_input(INPUT_POST, 'amountOwed', FILTER_VALIDATE_FLOAT);
         $pawnOrSell = filter_input(INPUT_POST, 'pawnOrSell');
         $dateRecieved = filter_input(INPUT_POST, 'date');
         $error = FALSE;
@@ -357,21 +358,44 @@ switch ($action) {
             $errorAmountWanted = "Please enter a number";
         }
         
+        if ($amountOwed == "" || $amountOwed == NULL) {
+            $error = true;
+            $errorAmountOwed = "Please enter a number";
+        }else if($amountOwed <= $amountWanted){
+            $error = true;
+            $errorAmountOwed = "Amount Owed must be more than Amount Given";
+        }
+
         if ($dateRecieved == "" || $dateRecieved == NULL) {
             $error = true;
             $errorDate = "Please enter a date";
         }
 
         if ($error) {
-            $action = 'customerListItem';
+            $action = 'empInspectItemPage';
             $_SESSION['admin'];
 
             include 'view\empInspectItemPage.php';
             die();
             break;
         }
-        
-        
+
+        if ($pawnOrSell === 'sell') {
+            DBitem::insertItem($itemName, $description);
+            $item = DBitem::getNewItem();
+            $itemID = $item->getItemID();
+            DBitem::insertNewInventoryItem($itemID, $dateRecieved, $amountWanted, $amountOwed, $_SESSION['userID']);
+            
+        } else {
+            DBitem::insertItem($itemName, $description);
+            $item = DBitem::getNewItem();
+            $itemID = $item->getItemID();
+            $inquirItem = DBitem::getCustInquiryByID($_SESSION['inquiryID']);
+            $customerID = $inquirItem->getCustomerID();
+            DBitem::insertNewPawnItem($itemID, $customerID, $dateRecieved, $amountOwed, $_SESSION['userID']);
+        }
+
+
         header('Location: index.php?action=removeItemFormInquiry');
         die();
         break;
