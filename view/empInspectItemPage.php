@@ -88,7 +88,11 @@ and open the template in the editor.
 
                 </table>
 
-                <input type="submit" value="Approved"><br>
+                <input type="submit" value="Approve This Item">
+            </form><br>
+            <form id="inputform" action="index.php" method="post">
+                <input type="hidden" name="action" value="removeItemFormInquiry" />
+                <input type="submit" value="Decline and Delete Item"><br>
             </form>
         </main> 
     </body>

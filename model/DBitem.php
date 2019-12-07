@@ -229,4 +229,15 @@ class DBitem {
         return $items;
     }
 
+    public static function removeInquiryItemByInquiryID($inquiryID) {
+        $db = Database::getDB();
+
+        $query = 'DELETE FROM customerinquirytable
+                    WHERE inquiryID = :inquiryID';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':inquiryID', $inquiryID);
+        $statement->execute();
+        $statement->closeCursor();
+    }
+
 }
