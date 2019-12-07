@@ -338,6 +338,7 @@ switch ($action) {
         $description = filter_input(INPUT_POST, 'description');
         $amountWanted = filter_input(INPUT_POST, 'amountWanted', FILTER_VALIDATE_FLOAT);
         $pawnOrSell = filter_input(INPUT_POST, 'pawnOrSell');
+        $dateRecieved = filter_input(INPUT_POST, 'date');
         $error = FALSE;
 
         if (Validate::LengthToShort($itemName, 1) || Validate::LengthTolong($itemName, 51)) {
@@ -354,6 +355,11 @@ switch ($action) {
         if ($amountWanted == "" || $amountWanted == NULL) {
             $error = true;
             $errorAmountWanted = "Please enter a number";
+        }
+        
+        if ($dateRecieved == "" || $dateRecieved == NULL) {
+            $error = true;
+            $errorDate = "Please enter a date";
         }
 
         if ($error) {

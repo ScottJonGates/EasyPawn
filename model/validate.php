@@ -33,4 +33,9 @@ class Validate {
         return $valid;
     }
 
+    public static function validateDate($date, $format) { // https://www.codexworld.com/how-to/validate-date-input-string-in-php/
+        $d = DateTime::createFromFormat($format, $date);
+        return $d && $d->format($format) === $date;
+    }
+
 }
