@@ -416,8 +416,21 @@ switch ($action) {
         die();
         break;
 
+    case 'inventoryItems':
+        
+        
+        
+        include 'view\inventoryItemsPage.php';
+        die();
+        break;
 
-
+    case 'pawnItems':
+        
+        
+        
+        include 'view\pawnItemsPage.php';
+        die();
+        break;
 
 
 
