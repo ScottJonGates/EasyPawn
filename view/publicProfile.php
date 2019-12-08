@@ -34,19 +34,21 @@ and open the template in the editor.
                         <td><?php echo htmlspecialchars($item->getDateRecieved()); ?></td>
                         <td>$<?php echo htmlspecialchars($item->getLoanAmount()); ?></td>
                         <td>$<?php echo htmlspecialchars(($item->getLoanAmount() - $item->getPaymentRecieved())); ?></td>
-                        <td>$<?php if ($item->getPaidOff() === TRUE) { ?>
+                        <td><?php if ($item->getPaidOff() === TRUE) { ?>
                                 Paid Off
                             <?php } else { ?>
                                 Payment Do
                             <?php } ?>
                         </td>
-                        <td><form action="index.php" method="post">
+                        <td>
+                            <form action="index.php" method="post">
                                 <input type="hidden" name="action"
                                        value="modifyItem">
                                 <input type="hidden" name="itemID"
                                        value="<?php echo htmlspecialchars($item->getItemID()); ?>">
                                 <input type="submit" value="Make Payment">
-                            </form></td>
+                            </form>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </table>

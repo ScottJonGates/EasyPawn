@@ -29,27 +29,44 @@ and open the template in the editor.
             <br>
             <h2>Please Sign In</h2>
             <p class="error"><?php echo htmlspecialchars($registerError) ?></p>
+
             <form id="inputform" action="index.php" method="post">
                 <input type="hidden" name="action" value="checkLogin" />
-                <label>User Name</label>
-                <input type="text" name="uName"
-                       value="<?php echo htmlspecialchars($uName); ?>"><br>
-                       <?php if (!empty($errorUName)) { ?>
-                    <span class="error"><?php echo htmlspecialchars($errorUName); ?></span>
-                <?php } ?>
-                <br>
+                <table id='no_border'>
+                    <tr>
+                        <td class='lineRight'>
+                            <label>User Name</label>
+                        </td>
+                        <td>
+                            <input type="text" name="uName"
+                                   value="<?php echo htmlspecialchars($uName); ?>"><br>
+                                   <?php if (!empty($errorUName)) { ?>
+                                <span class="error"><?php echo htmlspecialchars($errorUName); ?></span>
+                            <?php } ?>
+                        </td>
+                        <td class='lineRight'>
+                            <label>Password</label>
+                        </td>
+                        <td>
+                            <input type="password" name="password"><br>
+                            <?php if (!empty($errorPass)) { ?>
+                                <span class="error"><?php echo htmlspecialchars($errorPass); ?></span>
+                            <?php } ?>
+                        </td>
+                    
+                    
+                        <td>
+                       <input type="submit" value="Sign In"> 
+                        </td>
+                    </tr>
+                    <br>
+                    <label>&nbsp;</label>
+                    
 
-                <label>Password</label>
-                <input type="password" name="password"><br>
-                <?php if (!empty($errorPass)) { ?>
-                    <span class="error"><?php echo htmlspecialchars($errorPass); ?></span>
-                <?php } ?>
-                <br>
-                <label>&nbsp;</label>
-                <input type="submit" value="Sign In"><br><br>
+                </table><br><br>
                 <div id="userNav"><?php include 'nav.php'; ?></div>
             </form>
-            
+
             <?php
             // put your code here
             ?>

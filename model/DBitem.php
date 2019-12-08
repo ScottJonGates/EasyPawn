@@ -256,8 +256,8 @@ class DBitem {
         $query = 'SELECT * 
                     FROM items as i 
                     WHERE itemID NOT IN (SELECT itemID FROM pawnitems) 
-                    OR itemID NOT IN (SELECT itemID FROM inventory) 
-                    OR itemID NOT IN (SELECT itemID FROM solditems)';
+                    AND itemID NOT IN (SELECT itemID FROM inventory) 
+                    AND itemID NOT IN (SELECT itemID FROM solditems)';
         $statement = $db->prepare($query);
         $statement->execute();
         $row = $statement->fetch();
