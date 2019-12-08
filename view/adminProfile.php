@@ -36,7 +36,7 @@ and open the template in the editor.
                             <td><?php if ($emp->getAdmin() == 20) { ?>
                                     <form action="index.php" method="post">
                                         <input type="hidden" name="action"
-                                               value="makeEmp">
+                                               value="makeAdmin">
                                         <input type="hidden" name="userID"
                                                value="<?php echo htmlspecialchars($emp->getUserID()); ?>">
                                         <input type="submit" value="Make Admin">

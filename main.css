@@ -89,14 +89,16 @@ a:hover {
 }
 
 table {
-    border: 1px solid #001963;
+    border: 1px solid 	#9ac17a;
     border-collapse: collapse;
+    background-color: #80af83;
 }
 td, th {
     border: 1px dashed #001963;
     padding: .2em .5em .2em .5em;
     text-align: left;
 }
+
 
 #lineRight{
     text-align: right;

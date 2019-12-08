@@ -195,19 +195,19 @@ class DBuser {
         $statement->closeCursor();
     }
 
-    public static function isCurrentEmployee($uName) {
+    public static function isCurrentEmployee($username) {
         $db = Database::getDB();
         $query = 'select * 
                  from users
-                 WHERE userID = :userID';
+                 WHERE username = :username';
         $statement = $db->prepare($query);
-        $statement->bindValue(':userID', $userID);
+        $statement->bindValue(':username', $username);
         $statement->execute();
         $row = $statement->fetch();
         $statement->closeCursor();
         $user = new User($row['userID'], $row['fName'], $row['lName'], $row['username'], $row['email'], $row['phoneNumber'], $row['admin']);
         $flag = TRUE;
-        if (empty($user)) {
+        if ($row == FALSE || $row == null) {
             $flag = FALSE;
         }
         return $flag;

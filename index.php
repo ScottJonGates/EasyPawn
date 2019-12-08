@@ -175,11 +175,7 @@ switch ($action) {
 
                 DBuser::insertNewEmployee($user->getUserID(), $hireDate, $salary);
                 $user = DBuser::getUserByUserName($uName);
-                $_SESSION['uName'] = $user->getUsername();
-                $_SESSION['fName'] = $user->getFName();
-                $_SESSION['lName'] = $user->getLName();
-                $_SESSION['userID'] = $user->getUserID();
-                $_SESSION['admin'] = $user->getAdmin();
+                
                 $_SESSION['EmpModID'] = '';
             }
 
@@ -238,10 +234,23 @@ switch ($action) {
         include 'view\adminProfile.php';
         die();
         break;
+    case 'makeAdmin': /* go to admin profile page */
+        $userID = filter_input(INPUT_POST, 'userID');
+        $user = DBuser::getUserByID($userID);
+        if($user->getAdmin() == 20){
+            DBuser::AddAdminByUserID($userID);
+        }else {
+            DBuser::removeAdminByUserID($userID);
+        }
+        $employees = DBuser::getEmployees();
+        $current = $_SESSION['userID'];
+        include 'view\adminProfile.php';
+        die();
+        break;
 
     case 'newEmployeePage': /* go to admin profile page */
         $userID = filter_input(INPUT_POST, 'userID');
-        if ($userID !== null || $userID !== '') {
+        if ($userID != null || $userID != '') {
             $emp = DBuser::getEmployeeByID($userID);
             $fName = $emp->getFName();
             $lName = $emp->getLName();
