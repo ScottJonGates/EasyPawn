@@ -29,14 +29,20 @@
 
     <button class="button" onclick="location.href = 'index.php?action=welcome'" type="button" title="Login in as a New User"><!--  To welcome page  -->
         Login Page as New User</button>
-<?php } else if ($action === 'employeeProfile' || $action === 'inspectItem') { ?>
+<?php } else if ($action === 'employeeProfile' || $action === 'inspectItem' || $action === 'inventoryItems' || $action === 'pawnItems' ||
+        $action === 'inspectPawn' || $action === 'inspectInventory') { ?>
 
     <button class="button" onclick="location.href = 'index.php?action=employeeProfile'" type="button" title="Employee Profile Page"><!--  To welcome page  -->
         Employee Profile Page</button>
 
+    <button class="button" onclick="location.href = 'index.php?action=inventoryItems'" type="button" title="See Inventory Items"><!--  To welcome page  -->
+        See Inventory Items</button>
+
+    <button class="button" onclick="location.href = 'index.php?action=pawnItems'" type="button" title="See Pawned Items"><!--  To welcome page  -->
+        See Pawned Items</button>
+
     <button class="button" onclick="location.href = 'index.php?action=welcome'" type="button" title="Login in as a New User"><!--  To welcome page  -->
         Login Page as New User</button>
-
     <?php
 } 
 

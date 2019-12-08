@@ -17,7 +17,7 @@ and open the template in the editor.
             <div id="userNav"><?php include 'nav.php'; ?></div>
         </header>
         <main>
-            <h1>Items you have Offered</h1>
+            <h1>Items Offered</h1>
             <table>
                 <tr>
                     <th>Item Name</th>

@@ -423,12 +423,27 @@ switch ($action) {
         include 'view\inventoryItemsPage.php';
         die();
         break;
+    case 'inspectInventory':
+        
+        
+        
+        include 'view\inventoryItemsPage.php';
+        die();
+        break;
 
     case 'pawnItems':
-        
+        $pawnedItems = DBitem::getItemPawned();
         
         
         include 'view\pawnItemsPage.php';
+        die();
+        break;
+    case 'inspectPawn':
+        $itemID = filter_input(INPUT_POST, 'itemID');
+        $pawnItem = DBitem::getItemPawnedByItemID($itemID);
+        
+        
+        include 'view\inventoryItemsPage.php';
         die();
         break;
 
