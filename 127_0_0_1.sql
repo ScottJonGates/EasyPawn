@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2019 at 05:36 AM
+-- Generation Time: Dec 09, 2019 at 01:23 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -44,12 +44,17 @@ CREATE TABLE `customerinquirytable` (
 --
 
 INSERT INTO `customerinquirytable` (`inquiryID`, `customerID`, `itemName`, `description`, `amountWanted`, `pawnOrSell`) VALUES
-(1, 3, 'Car', '1995 Ford Tauars sel', 2500, 'sell'),
-(2, 4, 'Jeffrey Epstein', 'Assisted Suicide', 750, 'sell'),
-(3, 4, 'Bob Denver', 'Sounds of Christmas', 55000, 'pawn'),
 (4, 4, 'Dick Cheney', 'Hunting tips', 1000, 'sell'),
 (5, 4, 'President Trump', 'How to disagree with other people without offending them', 750, 'pawn'),
-(6, 3, 'steel guitar ', 'once owned by Junior Brown', 2675, 'pawn');
+(7, 4, 'Justin Trudeau', 'What to wear to a party', 1857, 'pawn'),
+(8, 4, 'Michael Jackson', 'Sing like your hair is on fire', 45, 'sell'),
+(9, 4, 'Bill Clinton', 'Faithful until the end ', 23, 'pawn'),
+(11, 4, 'Marv Albert', 'A bite to eat', 100, 'sell'),
+(13, 4, '2 Live Crew', 'Songs for the Kiddies', 25, 'sell'),
+(14, 4, 'Jim Jones', 'OG Kool Aid Man', 750, 'sell'),
+(16, 3, 'Safe', '4ft by 2ft and 3ft deep', 250, 'pawn'),
+(17, 3, 'Ralph Kramden', 'Trip to the Moon', 45, 'sell'),
+(19, 3, 'Mr. Ed', 'Straight from the horses mouth', 55, 'pawn');
 
 -- --------------------------------------------------------
 
@@ -68,9 +73,11 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`userID`, `hireDate`, `salary`) VALUES
-(2, '2019-05-24', 65000),
-(13, '2019-05-24', 45000),
-(14, '2019-05-24', 35000);
+(2, '2015-06-16', 34500),
+(13, '2018-10-30', 43500),
+(14, '2015-06-25', 35500),
+(15, '2019-05-24', 35000),
+(16, '2019-05-25', 45500);
 
 -- --------------------------------------------------------
 
@@ -87,6 +94,14 @@ CREATE TABLE `inventory` (
   `askingPrice` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `inventory`
+--
+
+INSERT INTO `inventory` (`inventoryID`, `itemID`, `employeeID`, `dateInserted`, `boughtFor`, `askingPrice`) VALUES
+(2, 5, 13, '2019-12-06', 1875, 2675),
+(3, 7, 16, '2019-12-05', 25, 37);
+
 -- --------------------------------------------------------
 
 --
@@ -98,6 +113,16 @@ CREATE TABLE `items` (
   `itemName` varchar(50) NOT NULL,
   `description` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `items`
+--
+
+INSERT INTO `items` (`itemID`, `itemName`, `description`) VALUES
+(2, 'Marshall Applewhite', 'How to sell Nike shoes'),
+(5, 'steel guitar ', 'once owned by Junior Brown'),
+(6, 'Ted Cruz', 'My father the zodiac killer '),
+(7, 'Nike', 'Freedom and fair wages (except in our factories)');
 
 -- --------------------------------------------------------
 
@@ -111,10 +136,18 @@ CREATE TABLE `pawnitems` (
   `customerID` int(11) NOT NULL,
   `dateRecieved` date NOT NULL,
   `loanAmount` float NOT NULL,
-  `paymentRecieved` float NOT NULL,
-  `paidOff` tinyint(1) NOT NULL,
+  `paymentRecieved` float NOT NULL DEFAULT '0',
+  `paidOff` tinyint(1) NOT NULL DEFAULT '0',
   `employeeID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pawnitems`
+--
+
+INSERT INTO `pawnitems` (`pawnID`, `itemID`, `customerID`, `dateRecieved`, `loanAmount`, `paymentRecieved`, `paidOff`, `employeeID`) VALUES
+(1, 2, 4, '2019-12-05', 135, 135, 1, 13),
+(2, 6, 4, '2019-12-07', 135, 0, 0, 13);
 
 -- --------------------------------------------------------
 
@@ -155,11 +188,13 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`userID`, `fName`, `lName`, `username`, `email`, `phoneNumber`, `password`, `admin`) VALUES
-(2, 'Scott', 'Gates', 'Gman123456', 'sgates699@windstream.net', 'NewPassword', 'KellyGates', 10),
+(2, 'Kelly', 'Gates', 'KellyGates', 'kgater@me.org', '402-456-6789', 'KellyGates', 10),
 (3, 'Scott', 'Gates', 'ScottJonGates', NULL, NULL, 'ScottJonGates', 30),
 (4, 'Scott', 'Gates', 'ScottGates', NULL, NULL, 'ScottGates', 30),
-(13, 'Scott', 'Gates', 'Gman123456', 'sgates699@windstream.net', 'NewPassword', 'NewPassword', 20),
-(14, 'Scott', 'Gates', 'Gman123456', 'sgates699@windstream.net', 'NewPassword', 'ScottGatesScottGates', 20);
+(13, 'Peter', 'Gates', 'PeterGates', 'sgates699@windstream.net', '402-217-3885', 'PeterGates', 20),
+(14, 'Bob', 'Smith', 'ScottGatesScottGates', 'bob@bob.bob', '402-456-6789', 'ScottGatesScottGates', 20),
+(15, 'Caitlyn', 'Gates', 'CaitlynGates', 'sgates699@windstream.net', '402-217-3885', 'CaitlynGates', 20),
+(16, 'Tommie', 'Gunn', 'TommieGunn', 'sgates699@windstream.net', '402-217-3885', 'TommieGunn', 20);
 
 --
 -- Indexes for dumped tables
@@ -215,25 +250,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `customerinquirytable`
 --
 ALTER TABLE `customerinquirytable`
-  MODIFY `inquiryID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `inquiryID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `inventoryID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `inventoryID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `itemID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `itemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `pawnitems`
 --
 ALTER TABLE `pawnitems`
-  MODIFY `pawnID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `pawnID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `solditems`
@@ -245,7 +280,7 @@ ALTER TABLE `solditems`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
