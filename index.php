@@ -284,6 +284,7 @@ switch ($action) {
             $amountWanted = $item->getLoanAmount();
             $pawnOrSell = 'pawn';
             DBitem::removePawnItemByItemID($itemID);
+            DBitem::removeItemByItemID($itemID);
         }
 
         $action = 'customerListItem';

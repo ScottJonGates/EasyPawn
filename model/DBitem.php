@@ -347,4 +347,15 @@ class DBitem {
         $statement->closeCursor();
     }
 
+    public static function removeItemByItemID($itemID) {
+        $db = Database::getDB();
+
+        $query = 'DELETE FROM items
+                    WHERE itemID = :itemID';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':itemID', $itemID);
+        $statement->execute();
+        $statement->closeCursor();
+    }
+
 }
