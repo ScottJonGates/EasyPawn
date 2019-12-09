@@ -336,4 +336,15 @@ class DBitem {
         $statement->closeCursor();
     }
 
+    public static function removePawnItemByItemID($itemID) {
+        $db = Database::getDB();
+
+        $query = 'DELETE FROM pawnitems
+                    WHERE itemID = :itemID';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':itemID', $itemID);
+        $statement->execute();
+        $statement->closeCursor();
+    }
+
 }

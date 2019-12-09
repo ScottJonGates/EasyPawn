@@ -268,13 +268,22 @@ switch ($action) {
 
     case 'customerListItem': /* go to admin profile page */
         $inquiryID = filter_input(INPUT_POST, 'inquiryID');
-        if ($inquiryID !== null || $inquiryID !== '') {
+        $itemID = filter_input(INPUT_POST, 'itemID');
+        if (isset($inquiryID)  || $inquiryID != '') {
             $item = DBitem::getCustInquiryByID($inquiryID);
             $itemName = $item->getItemName();
             $description = $item->getDescription();
             $amountWanted = $item->getAmountWanted();
             $pawnOrSell = $item->getPawnOrSell();
             $_SESSION['inquiryID'] = $inquiryID;
+        }
+        if (isset($itemID) || $itemID != '') {
+            $item = DBitem::getItemPawnedByItemID($itemID);
+            $itemName = $item->getItemName();
+            $description = $item->getDescription();
+            $amountWanted = $item->getLoanAmount();
+            $pawnOrSell = 'pawn';
+            DBitem::removePawnItemByItemID($itemID);
         }
 
         $action = 'customerListItem';

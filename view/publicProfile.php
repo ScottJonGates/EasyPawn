@@ -40,6 +40,17 @@ and open the template in the editor.
                                 Payment Do
                             <?php } ?>
                         </td>
+                        <td><?php if ((int)$item->getPaidOff() == 1) { ?>
+                                <form action="index.php" method="post">
+                                <input type="hidden" name="action"
+                                       value="customerListItem">
+                                <input type="hidden" name="itemID"
+                                       value="<?php echo htmlspecialchars($item->getItemID()); ?>">
+                                <input type="submit" value="Resubmit for Inquiry">
+                            </form>
+                        
+                            <?php }  ?>
+                        </td>
                         
                     </tr>
                 <?php endforeach; ?>
@@ -66,7 +77,8 @@ and open the template in the editor.
                                 <input type="hidden" name="inquiryID"
                                        value="<?php echo htmlspecialchars($item->getInquiryID()); ?>">
                                 <input type="submit" value="Edit">
-                            </form></td>
+                            </form>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </table>
