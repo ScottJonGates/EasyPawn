@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 09, 2019 at 01:23 AM
+-- Generation Time: Dec 09, 2019 at 10:41 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -46,15 +46,15 @@ CREATE TABLE `customerinquirytable` (
 INSERT INTO `customerinquirytable` (`inquiryID`, `customerID`, `itemName`, `description`, `amountWanted`, `pawnOrSell`) VALUES
 (4, 4, 'Dick Cheney', 'Hunting tips', 1000, 'sell'),
 (5, 4, 'President Trump', 'How to disagree with other people without offending them', 750, 'pawn'),
-(7, 4, 'Justin Trudeau', 'What to wear to a party', 1857, 'pawn'),
+(7, 4, 'Justin Trudeau', 'What to wear to a party', 2001, 'pawn'),
 (8, 4, 'Michael Jackson', 'Sing like your hair is on fire', 45, 'sell'),
-(9, 4, 'Bill Clinton', 'Faithful until the end ', 23, 'pawn'),
 (11, 4, 'Marv Albert', 'A bite to eat', 100, 'sell'),
 (13, 4, '2 Live Crew', 'Songs for the Kiddies', 25, 'sell'),
 (14, 4, 'Jim Jones', 'OG Kool Aid Man', 750, 'sell'),
 (16, 3, 'Safe', '4ft by 2ft and 3ft deep', 250, 'pawn'),
 (17, 3, 'Ralph Kramden', 'Trip to the Moon', 45, 'sell'),
-(19, 3, 'Mr. Ed', 'Straight from the horses mouth', 55, 'pawn');
+(20, 4, 'Marshall Applewhite', 'How to sell Nike shoes', 135, 'pawn'),
+(22, 4, 'Ted Cruz', 'My father the zodiac killer ', 145, 'pawn');
 
 -- --------------------------------------------------------
 
@@ -73,11 +73,11 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`userID`, `hireDate`, `salary`) VALUES
-(2, '2015-06-16', 34500),
+(2, '2015-06-16', 64500),
 (13, '2018-10-30', 43500),
 (14, '2015-06-25', 35500),
 (15, '2019-05-24', 35000),
-(16, '2019-05-25', 45500);
+(16, '2019-05-16', 43500);
 
 -- --------------------------------------------------------
 
@@ -121,8 +121,8 @@ CREATE TABLE `items` (
 INSERT INTO `items` (`itemID`, `itemName`, `description`) VALUES
 (2, 'Marshall Applewhite', 'How to sell Nike shoes'),
 (5, 'steel guitar ', 'once owned by Junior Brown'),
-(6, 'Ted Cruz', 'My father the zodiac killer '),
-(7, 'Nike', 'Freedom and fair wages (except in our factories)');
+(7, 'Nike', 'Freedom and fair wages (except in our factories)'),
+(9, 'Bill Clinton', 'Faithful until the end ');
 
 -- --------------------------------------------------------
 
@@ -146,8 +146,8 @@ CREATE TABLE `pawnitems` (
 --
 
 INSERT INTO `pawnitems` (`pawnID`, `itemID`, `customerID`, `dateRecieved`, `loanAmount`, `paymentRecieved`, `paidOff`, `employeeID`) VALUES
-(1, 2, 4, '2019-12-05', 135, 135, 1, 13),
-(2, 6, 4, '2019-12-07', 135, 0, 0, 13);
+(3, 2, 3, '2019-12-09', 95, 0, 0, 13),
+(4, 9, 4, '2019-12-09', 25, 0, 0, 13);
 
 -- --------------------------------------------------------
 
@@ -191,10 +191,10 @@ INSERT INTO `users` (`userID`, `fName`, `lName`, `username`, `email`, `phoneNumb
 (2, 'Kelly', 'Gates', 'KellyGates', 'kgater@me.org', '402-456-6789', 'KellyGates', 10),
 (3, 'Scott', 'Gates', 'ScottJonGates', NULL, NULL, 'ScottJonGates', 30),
 (4, 'Scott', 'Gates', 'ScottGates', NULL, NULL, 'ScottGates', 30),
-(13, 'Peter', 'Gates', 'PeterGates', 'sgates699@windstream.net', '402-217-3885', 'PeterGates', 20),
+(13, 'Peter', 'Gates', 'PeterGates', 'sgates699@windstream.net', '402-476-3885', 'PeterGates', 20),
 (14, 'Bob', 'Smith', 'ScottGatesScottGates', 'bob@bob.bob', '402-456-6789', 'ScottGatesScottGates', 20),
-(15, 'Caitlyn', 'Gates', 'CaitlynGates', 'sgates699@windstream.net', '402-217-3885', 'CaitlynGates', 20),
-(16, 'Tommie', 'Gunn', 'TommieGunn', 'sgates699@windstream.net', '402-217-3885', 'TommieGunn', 20);
+(15, 'Caitlyn', 'Gates', 'CaitlynGates', 'sgates699@windstream.net', '402-217-5587', 'CaitlynGates', 20),
+(16, 'Tommie', 'Gunn', 'TommieGunn', 'sgates699@windstream.net', '402-217-4848', 'TommieGunn', 10);
 
 --
 -- Indexes for dumped tables
@@ -250,7 +250,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `customerinquirytable`
 --
 ALTER TABLE `customerinquirytable`
-  MODIFY `inquiryID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `inquiryID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `inventory`
@@ -262,13 +262,13 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `itemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `itemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `pawnitems`
 --
 ALTER TABLE `pawnitems`
-  MODIFY `pawnID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `pawnID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `solditems`
