@@ -168,7 +168,7 @@ class DBitem {
         $query = 'select * 
                     from pawnitems as p 
                     inner JOIN items as i on p.itemID = i.itemID 
-                    WHERE p.employeeID = :employeeID';
+                    WHERE p.itemID = :itemID';
         $statement = $db->prepare($query);
         $statement->bindValue(':itemID', $itemID);
         $statement->execute();
@@ -315,6 +315,25 @@ class DBitem {
         $statement->closeCursor();
     }
 
-    
+    public static function updatePaymentRecievedByItemID($itemID,$newPaymentRecieved) {
+        $db = Database::getDB();
+        $query = 'UPDATE pawnitems SET paymentRecieved = :newPaymentRecieved 
+                WHERE itemID = :itemID';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':itemID', $itemID);
+        $statement->bindValue(':newPaymentRecieved', $newPaymentRecieved);
+        $statement->execute();
+        $statement->closeCursor();
+    }
+
+    public static function updatePaidOffByItemID($itemID) {
+        $db = Database::getDB();
+        $query = 'UPDATE pawnitems SET  paidOff = 1
+                WHERE itemID = :itemID';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':itemID', $itemID);
+        $statement->execute();
+        $statement->closeCursor();
+    }
 
 }

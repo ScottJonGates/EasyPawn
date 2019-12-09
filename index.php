@@ -175,7 +175,7 @@ switch ($action) {
 
                 DBuser::insertNewEmployee($user->getUserID(), $hireDate, $salary);
                 $user = DBuser::getUserByUserName($uName);
-                
+
                 $_SESSION['EmpModID'] = '';
             }
 
@@ -237,9 +237,9 @@ switch ($action) {
     case 'makeAdmin': /* go to admin profile page */
         $userID = filter_input(INPUT_POST, 'userID');
         $user = DBuser::getUserByID($userID);
-        if($user->getAdmin() == 20){
+        if ($user->getAdmin() == 20) {
             DBuser::AddAdminByUserID($userID);
-        }else {
+        } else {
             DBuser::removeAdminByUserID($userID);
         }
         $employees = DBuser::getEmployees();
@@ -366,11 +366,11 @@ switch ($action) {
             $error = true;
             $errorAmountWanted = "Please enter a number";
         }
-        
+
         if ($amountOwed == "" || $amountOwed == NULL) {
             $error = true;
             $errorAmountOwed = "Please enter a number";
-        }else if($amountOwed <= $amountWanted){
+        } else if ($amountOwed <= $amountWanted) {
             $error = true;
             $errorAmountOwed = "Amount Owed must be more than Amount Given";
         }
@@ -394,7 +394,6 @@ switch ($action) {
             $item = DBitem::getNewItem();
             $itemID = $item->getItemID();
             DBitem::insertNewInventoryItem($itemID, $dateRecieved, $amountWanted, $amountOwed, $_SESSION['userID']);
-            
         } else {
             DBitem::insertItem($itemName, $description);
             $item = DBitem::getNewItem();
@@ -417,36 +416,62 @@ switch ($action) {
         break;
 
     case 'inventoryItems':
-        
-        
-        
+
+
+
         include 'view\inventoryItemsPage.php';
         die();
         break;
     case 'inspectInventory':
-        
-        
-        
+
+
+
         include 'view\inventoryItemsPage.php';
         die();
         break;
 
     case 'pawnItems':
         $pawnedItems = DBitem::getItemPawned();
-        
-        
+
+
         include 'view\pawnItemsPage.php';
         die();
         break;
     case 'inspectPawn':
         $itemID = filter_input(INPUT_POST, 'itemID');
+        $_SESSION['itemID'] = $itemID;
         $pawnItem = DBitem::getItemPawnedByItemID($itemID);
         
-        
-        include 'view\inventoryItemsPage.php';
+        $itemName = $pawnItem->getItemName();
+        $description = $pawnItem->getDescription();
+        $pawnID = $pawnItem->getPawnID();
+        $dateRecieved = $pawnItem->getDateRecieved();
+        $loanAmount = $pawnItem->getLoanAmount();
+        $paymentRecieved = $pawnItem->getPaymentRecieved();
+        $_SESSION['paymentRecieved'] = $paymentRecieved;
+        $paidOff = $pawnItem->getPaidOff();
+        $amountOwed = $loanAmount - $paymentRecieved;
+        $_SESSION['amountOwed'] = $amountOwed;
+
+        include 'view\inspectPawnPage.php';
         die();
         break;
 
+    case 'makePayment':
+        $payment = (int)filter_input(INPUT_POST, 'payment');
+        $newPaymentRecieved = $_SESSION['paymentRecieved'] + $payment;
+        DBitem::updatePaymentRecievedByItemID($_SESSION['itemID'], $newPaymentRecieved);
+        $pawnItem = DBitem::getItemPawnedByItemID($_SESSION['itemID']);
+        if((float)$pawnItem->getLoanAmount() == (float)$pawnItem->getPaymentRecieved()){
+            DBitem::updatePaidOffByItemID($_SESSION['itemID']);
+        }
+
+        $_SESSION['itemID'] = '';
+        $_SESSION['amountOwed'] = '';
+        $_SESSION['paymentRecieved'] = '';
+        header('Location: index.php?action=pawnItems');
+        die();
+        break;
 
 
 

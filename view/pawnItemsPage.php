@@ -62,6 +62,7 @@ and open the template in the editor.
 
             <table>
                 <tr>
+                    <th>Customer ID</th>
                     <th>Item Name</th>
                     <th>Date Received</th>
                     <th>Loan Amount</th>
@@ -70,11 +71,12 @@ and open the template in the editor.
                 </tr>
                 <?php foreach ($pawnedItems as $item) : ?>
                     <tr>
+                        <td><?php echo htmlspecialchars($item->getCustomerID()); ?></td>
                         <td><?php echo htmlspecialchars($item->getItemName()); ?></td>
                         <td><?php echo htmlspecialchars($item->getDateRecieved()); ?></td>
                         <td>$<?php echo htmlspecialchars($item->getLoanAmount()); ?></td>
                         <td>$<?php echo htmlspecialchars(($item->getLoanAmount() - $item->getPaymentRecieved())); ?></td>
-                        <td><?php if ($item->getPaidOff() === TRUE) { ?>
+                        <td><?php if ((int)$item->getPaidOff() == 1) { ?>
                                 Paid Off
                             <?php } else { ?>
                                 No
@@ -83,7 +85,7 @@ and open the template in the editor.
                         <td>
                             <form action="index.php" method="post">
                                 <input type="hidden" name="action"
-                                       value="modifyPawn">
+                                       value="inspectPawn">
                                 <input type="hidden" name="itemID"
                                        value="<?php echo htmlspecialchars($item->getItemID()); ?>">
                                 <input type="submit" value="Inspect">
